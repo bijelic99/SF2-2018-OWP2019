@@ -1,0 +1,18 @@
+create table tip_projekcije(id integer primary key autoincrement, naziv varchar(32) NOT NULL);
+create table sala(id integer primary key autoincrement, naziv varchar(32) NOT NULL);
+create table tip_projekcije_u_sali(sala_id integer not null, tip_projekcije_id int not null, foreign key (sala_id) references sala(id), foreign key (tip_projekcije_id) references tip_projekcije(id), primary key (sala_id, tip_projekcije_id));
+create table sediste(id integer primary key autoincrement, redni_broj integer not null,sala_id integer NOT NULL, FOREIGN KEY (sala_id) references sala(id));
+
+create table osoba(id integer PRIMARY KEY AUTOINCREMENT, ime_prezime varchar(126) NOT NULL);
+create table zanr(id integer PRIMARY KEY AUTOINCREMENT, naziv varchar(64) NOT NULL);
+create table film(id integer PRIMARY KEY AUTOINCREMENT, naziv varchar(64) not null, reziser_id integer, trajanje integer not null, distributer varchar(64) not null, zemlja_porekla varchar(64) not null, godina_proizvodnje int not null,  opis varchar(1024), obrisan boolean NOT NULL default false, CHECK(trajanje > 0), CHECK(godina_proizvodnje > 0), FOREIGN KEY (reziser_id) REFERENCES osoba(id));
+create table film_zanr(film_id int, zanr_id int, FOREIGN KEY (film_id) REFERENCES film(id), FOREIGN KEY (zanr_id) REFERENCES zanr(id), PRIMARY KEY (film_id, zanr_id));
+create table film_glumac(film_id int, glumac_id int, FOREIGN KEY (film_id) REFERENCES film(id), FOREIGN KEY (glumac_id) REFERENCES glumac(id), PRIMARY KEY (film_id, glumac_id));
+
+create table uloga(id integer PRIMARY KEY AUTOINCREMENT, naziv varchar(64) not null);
+create table korisnik(id integer PRIMARY KEY AUTOINCREMENT, username varchar(64) UNIQUE not null, password varchar(64) not null, datum_registracije date not null default (date('now')), uloga_id integer not null DEFAULT 0, obrisan boolean not null DEFAULT false, FOREIGN KEY (uloga_id) REFERENCES uloga(id));
+
+CREATE TABLE projekcija(id integer PRIMARY KEY AUTOINCREMENT, film_id int not null, tip_projekcije_id int not null, sala_id int not null, datum_vreme_projekcije datetime not null, cena_karte int not null, obrisan boolean not null default false, CHECK(cena_karte > 0), FOREIGN KEY (film_id) REFERENCES film(id), FOREIGN KEY (tip_projekcije_id) REFERENCES tip_projekcije(id), FOREIGN KEY (sala_id) REFERENCES sala(id));
+create table projekcija_administrator(projekcija_id int PRIMARY KEY, korisnik_id int, FOREIGN KEY (projekcija_id) REFERENCES projekcija(id), FOREIGN KEY (korisnik_id) REFERENCES korisnik(id));
+
+create table karta(id integer PRIMARY KEY AUTOINCREMENT, projekcija_id int not null, sediste_id int not null, korisnik_id int not null, datum_vreme_prodaje datetime not null default (datetime('now')), obrisan boolean not null default false, FOREIGN KEY (projekcija_id) REFERENCES projekcija(id), foreign key (sediste_id) REFERENCES sediste(id), FOREIGN KEY (korisnik_id) REFERENCES korisnik(id));
