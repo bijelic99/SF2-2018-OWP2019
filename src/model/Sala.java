@@ -21,7 +21,7 @@ public class Sala extends NamedIdentifiable {
 	}
 
 	public Sala() {
-		this(-1, "", new ArrayList<TipProjekcije>());
+		this(0, "", new ArrayList<TipProjekcije>());
 	}
 	
 	

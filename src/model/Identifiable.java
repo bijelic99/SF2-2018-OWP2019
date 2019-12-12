@@ -9,7 +9,7 @@ public abstract class Identifiable {
 	
 
 	public Identifiable() {
-		this(-1);
+		this(0);
 	}
 
 	public int getId() {

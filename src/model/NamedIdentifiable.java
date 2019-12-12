@@ -11,7 +11,7 @@ public abstract class NamedIdentifiable extends Identifiable {
 	}
 
 	public NamedIdentifiable() {
-		this(-1, "");
+		this(0, "");
 	}
 	
 	public String getNaziv() {
