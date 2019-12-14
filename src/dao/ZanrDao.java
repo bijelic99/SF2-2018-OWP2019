@@ -23,13 +23,13 @@ public class ZanrDao implements DaoInterface {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, zanr.getNaziv());
 			resultSet = preparedStatement.executeQuery();
-			//moguca greska
-			preparedStatement.close();
-			if (resultSet.getInt(1) > 0) {
 
+			if (resultSet.getInt(1) > 0) {
+				preparedStatement.close();
 				connection.rollback();
 
 			} else {
+				preparedStatement.close();
 				query = "insert into zanr(naziv) values(?);";
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, zanr.getNaziv());
@@ -46,17 +46,17 @@ public class ZanrDao implements DaoInterface {
 			try {
 				resultSet.close();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+
 			}
 			try {
 				preparedStatement.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
 			try {
 				connection.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
 		}
 

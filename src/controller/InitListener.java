@@ -24,7 +24,7 @@ public class InitListener implements ServletContextListener {
         // TODO Auto-generated constructor stub
     	ConnectionManager.open();
     	System.out.println("Povezano");
-    	
+    	/*
     	//test
     	Film f = new Film();
     	f.setNaziv("testFilm");
@@ -39,6 +39,8 @@ public class InitListener implements ServletContextListener {
     	zanrovi.add(new Zanr(0,"Horor"));
     	zanrovi.add(new Zanr(0,"Murder Mystery"));
     	f.setZanrovi(zanrovi);
+    	f.setGodinaProizvodnje(2019);
+    	f.setTrajanje(121*60);
     	
     	try {
 			DaoInterface.filmDao.add(f);
@@ -46,7 +48,7 @@ public class InitListener implements ServletContextListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+    	*/
     }
 
 	@Override

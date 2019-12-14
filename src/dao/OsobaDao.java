@@ -24,12 +24,13 @@ public class OsobaDao implements DaoInterface {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, osoba.getNaziv());
 			resultSet = preparedStatement.executeQuery();
-			preparedStatement.close();
-			if (resultSet.getInt(1) > 0) {
 
+			if (resultSet.getInt(1) > 0) {
+				preparedStatement.close();
 				connection.rollback();
 
 			} else {
+				preparedStatement.close();
 				query = "insert into osoba(ime_prezime) values(?);";
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, osoba.getNaziv());
@@ -46,17 +47,17 @@ public class OsobaDao implements DaoInterface {
 			try {
 				resultSet.close();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+
 			}
 			try {
 				preparedStatement.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
 			try {
 				connection.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
 	@Override
 	public int add(Identifiable object) throws Exception {
-		Film film = (Film)object;
+		Film film = (Film) object;
 		Connection connection = ConnectionManager.getConnection();
 		PreparedStatement preparedStatement = null;
 		String query = "";
@@ -27,10 +28,12 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} return z;}).collect(Collectors.toCollection(ArrayList::new)));
+				}
+				return z;
+			}).collect(Collectors.toCollection(ArrayList::new)));
 			Osoba reziser = film.getReziser();
 			reziser.setId(DaoInterface.osobaDao.add(reziser));
-			film.setGlumci(film.getGlumci().stream().map(o->{
+			film.setGlumci(film.getGlumci().stream().map(o -> {
 				try {
 					o.setId(DaoInterface.osobaDao.add(o));
 				} catch (Exception e) {
@@ -39,12 +42,11 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				}
 				return o;
 			}).collect(Collectors.toCollection(ArrayList::new)));
-			
+
 			query = "insert into film(naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis)"
-					+ " values(?, ?, ?, ?, ?, ?, ?);"
-					+ "select last_insert_rowid() from film;";
+					+ " values(?, ?, ?, ?, ?, ?, ?);";
 			preparedStatement = connection.prepareStatement(query);
-			int i=0;
+			int i = 1;
 			preparedStatement.setString(i++, film.getNaziv());
 			preparedStatement.setInt(i++, film.getReziser().getId());
 			preparedStatement.setInt(i++, film.getTrajanje());
@@ -52,11 +54,13 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			preparedStatement.setString(i++, film.getZemljaPorekla());
 			preparedStatement.setInt(i++, film.getGodinaProizvodnje());
 			preparedStatement.setString(i++, film.getOpis());
-			
+			preparedStatement.executeUpdate();
+			query = "select last_insert_rowid();";
+			preparedStatement = connection.prepareStatement(query);
 			film.setId(preparedStatement.executeQuery().getInt(1));
 			preparedStatement.close();
-			
-			film.getZanrovi().stream().forEach(z->{
+
+			film.getZanrovi().stream().forEach(z -> {
 				try {
 					String zanrQuery = "insert into film_zanr values(?, ?);";
 					PreparedStatement zanrPreparedStatement = connection.prepareStatement(zanrQuery);
@@ -64,14 +68,14 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 					zanrPreparedStatement.setInt(2, z.getId());
 					zanrPreparedStatement.executeUpdate();
 					zanrPreparedStatement.close();
-					
+
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			});
-			
-			film.getGlumci().stream().forEach(o->{
+
+			film.getGlumci().stream().forEach(o -> {
 				try {
 					String zanrQuery = "insert into film_glumac values(?, ?);";
 					PreparedStatement zanrPreparedStatement = connection.prepareStatement(zanrQuery);
@@ -84,40 +88,73 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 					e2.printStackTrace();
 				}
 			});
-			
+
 			connection.commit();
 			return film.getId();
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			connection.rollback();
 			throw e;
-		}
-		finally {
+		} finally {
 			try {
 				preparedStatement.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
 			try {
 				connection.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
 		}
-		
-		
-		
-		
+
 	}
 
 	@Override
-	public boolean update(Identifiable object) {
+	public boolean update(Identifiable object) throws Exception {
+		Film film = (Film) object;
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			connection.setAutoCommit(false);
+			connection.commit();
+			
+
+			connection.commit();
+			
+		} catch (Exception e) {
+			connection.rollback();
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+				
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+			
+		}
+		return false;
+	}
+
+	@Override
+	public boolean delete(Identifiable object, boolean logickoBrisanje) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Identifiable object) {
+	public boolean delete(Identifiable object) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -140,10 +177,6 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		return null;
 	}
 
-	@Override
-	public boolean delete(Identifiable object, boolean logickoBrisanje) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 }
