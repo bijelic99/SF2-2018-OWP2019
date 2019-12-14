@@ -13,4 +13,8 @@ public interface DaoInterface {
 	public ArrayList<Identifiable> get(FilterInterface filterFunction) throws Exception;
 	public ArrayList<Identifiable> getAll() throws Exception;
 	
+	public static FilmDao filmDao = new FilmDao();
+	public static ZanrDao zanrDao = new ZanrDao();
+	public static OsobaDao osobaDao = new OsobaDao();
+	
 }
