@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import model.Identifiable;
 import model.Osoba;
+import model.Zanr;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class OsobaDao implements DaoInterface {
@@ -90,6 +91,48 @@ public class OsobaDao implements DaoInterface {
 	public ArrayList<Identifiable> getAll() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public ArrayList<Osoba> getGlumciForFilm(int id) throws Exception{
+		ArrayList<Osoba> osobe = new ArrayList<Osoba>();
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			query = "select glumac_id, ime_prezime from film_glumac join osoba on glumac_id = id where film_id = ?;";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Osoba osoba = new Osoba();
+				osoba.setId(resultSet.getInt(1));
+				osoba.setNaziv(resultSet.getString(2));
+				osobe.add(osoba);
+			}
+			
+		} catch (Exception e) {
+			
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+				
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+			
+		}
+		return osobe;
 	}
 
 }

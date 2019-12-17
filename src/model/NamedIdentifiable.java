@@ -22,6 +22,10 @@ public abstract class NamedIdentifiable extends Identifiable {
 		this.naziv = naziv;
 	}
 
-	
+	@Override
+	public String toString() {
+		return this.getId() + " " + this.getNaziv();
+	}
+
 
 }

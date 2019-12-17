@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import model.Film;
 import model.Identifiable;
+import model.Osoba;
 import model.Zanr;
 
 public class ZanrDao implements DaoInterface {
@@ -90,6 +92,48 @@ public class ZanrDao implements DaoInterface {
 	public ArrayList<Identifiable> getAll() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public ArrayList<Zanr> getZanrForFilm(int filmId) throws Exception{
+		ArrayList<Zanr> zanrovi = new ArrayList<Zanr>();
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			query = "select zanr_id, naziv from film_zanr join zanr on zanr_id = id where film_id = ? ";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, filmId);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Zanr zanr = new Zanr();
+				zanr.setId(resultSet.getInt(1));
+				zanr.setNaziv(resultSet.getString(2));
+				zanrovi.add(zanr);
+			}
+			
+		} catch (Exception e) {
+			
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+				
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+			
+		}
+		return zanrovi;
 	}
 
 }

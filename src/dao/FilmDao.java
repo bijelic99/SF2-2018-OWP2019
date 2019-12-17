@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import model.Film;
 import model.Identifiable;
 import model.Osoba;
+import model.Zanr;
 
 public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
@@ -55,6 +56,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			preparedStatement.setInt(i++, film.getGodinaProizvodnje());
 			preparedStatement.setString(i++, film.getOpis());
 			preparedStatement.executeUpdate();
+			preparedStatement.close();
 			query = "select last_insert_rowid();";
 			preparedStatement = connection.prepareStatement(query);
 			film.setId(preparedStatement.executeQuery().getInt(1));
@@ -119,10 +121,9 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		try {
 			connection.setAutoCommit(false);
 			connection.commit();
-			
 
 			connection.commit();
-			
+
 		} catch (Exception e) {
 			connection.rollback();
 			throw e;
@@ -130,7 +131,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			try {
 				resultSet.close();
 			} catch (Exception e) {
-				
+
 			}
 			try {
 				preparedStatement.close();
@@ -142,7 +143,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			} catch (Exception e) {
 
 			}
-			
+
 		}
 		return false;
 	}
@@ -161,22 +162,111 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
 	@Override
 	public Identifiable get(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Film film = null;
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			query = "select id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis from film where id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				int i = 1;
+				film = new Film();
+				film.setId(resultSet.getInt(i++));
+				film.setNaziv(resultSet.getString(i++));
+				film.setReziser((Osoba) DaoInterface.osobaDao.get(resultSet.getInt(i++)));
+				film.setTrajanje(resultSet.getInt(i++));
+				film.setDistributer(resultSet.getString(i++));
+				film.setZemljaPorekla(resultSet.getString(i++));
+				film.setGodinaProizvodnje(resultSet.getInt(i++));
+				film.setOpis(resultSet.getString(i++));
+				film.setZanrovi(DaoInterface.zanrDao.getZanrForFilm(film.getId()));
+				film.setGlumci(DaoInterface.osobaDao.getGlumciForFilm(film.getId()));
+
+			}
+
+		} catch (Exception e) {
+
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+
+		}
+		return film;
 	}
 
 	@Override
 	public ArrayList<Identifiable> get(FilterInterface filterFunction) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return getAll().stream().filter(i -> filterFunction.filter(i)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	@Override
 	public ArrayList<Identifiable> getAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		ArrayList<Identifiable> filmovi = new ArrayList<Identifiable>();
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			query = "select id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis from film where obrisan = false";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				int i = 1;
+				Film film = new Film();
+				film.setId(resultSet.getInt(i++));
+				film.setNaziv(resultSet.getString(i++));
+				film.setReziser((Osoba) DaoInterface.osobaDao.get(resultSet.getInt(i++)));
+				film.setTrajanje(resultSet.getInt(i++));
+				film.setDistributer(resultSet.getString(i++));
+				film.setZemljaPorekla(resultSet.getString(i++));
+				film.setGodinaProizvodnje(resultSet.getInt(i++));
+				film.setOpis(resultSet.getString(i++));
+				film.setZanrovi(DaoInterface.zanrDao.getZanrForFilm(film.getId()));
+				film.setGlumci(DaoInterface.osobaDao.getGlumciForFilm(film.getId()));
+				filmovi.add(film);
 
-	
+			}
+
+		} catch (Exception e) {
+
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+
+		}
+		return filmovi;
+	}
 
 }
