@@ -11,8 +11,10 @@ public class Film extends NamedIdentifiable {
 	private String zemljaPorekla;
 	private int godinaProizvodnje;
 	private String opis;
+	private Boolean obrisan;
+	
 	public Film(int id, String naziv, ArrayList<Zanr> zanrovi, Osoba reziser, ArrayList<Osoba> glumci, int trajanje,
-			String distributer, String zemljaPorekla, int godinaProizvodnje, String opis) {
+			String distributer, String zemljaPorekla, int godinaProizvodnje, String opis, Boolean obrisan) {
 		super(id, naziv);
 		this.zanrovi = zanrovi;
 		this.reziser = reziser;
@@ -22,9 +24,10 @@ public class Film extends NamedIdentifiable {
 		this.zemljaPorekla = zemljaPorekla;
 		this.godinaProizvodnje = godinaProizvodnje;
 		this.opis = opis;
+		this.setObrisan(obrisan);
 	}
 	public Film() {
-		this(0, "", new ArrayList<Zanr>(), new Osoba(), new ArrayList<Osoba>(), 0, "", "", 0, "");
+		this(0, "", new ArrayList<Zanr>(), new Osoba(), new ArrayList<Osoba>(), 0, "", "", 0, "", false);
 	}
 	public ArrayList<Zanr> getZanrovi() {
 		return zanrovi;
@@ -73,6 +76,12 @@ public class Film extends NamedIdentifiable {
 	}
 	public void setOpis(String opis) {
 		this.opis = opis;
+	}
+	public Boolean getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(Boolean obrisan) {
+		this.obrisan = obrisan;
 	}
 	
 	

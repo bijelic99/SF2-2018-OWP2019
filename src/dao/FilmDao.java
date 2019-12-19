@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -122,8 +123,67 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			connection.setAutoCommit(false);
 			connection.commit();
 
-			connection.commit();
+			film.setGlumci(film.getGlumci().stream().map(o -> {
+				try {
+					o.setId(DaoInterface.osobaDao.add(o));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return o;
+			}).collect(Collectors.toCollection(ArrayList::new)));
 
+			String glumci = film.getGlumci().stream().map(o -> o.getId()+"").reduce("", (ids, id)-> ids+id+", ");
+			glumci = glumci.trim();
+			glumci = glumci.substring(0, glumci.length()-1);
+			
+			query = "delete from film_glumac where film_id = ? and glumac_id not in ( "+glumci+" )";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, film.getId());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+
+			film.setZanrovi(film.getZanrovi().stream().map(z -> {
+				try {
+					z.setId(DaoInterface.zanrDao.add(z));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return z;
+			}).collect(Collectors.toCollection(ArrayList::new)));
+
+			String zanrovi = film.getZanrovi().stream().map(z -> z.getId()+"").reduce("", (ids, id) -> ids+id+", ");
+			zanrovi = zanrovi.strip();
+			zanrovi = zanrovi.substring(0, zanrovi.length()-1);
+			
+			query = "delete from film_zanr where film_id = ? and zanr_id not in ( "+zanrovi+" )";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, film.getId());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			
+			if(film.getReziser()!= null) film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));	
+			//greska tu
+			query = "update film set naziv = ?, reziser_id = ?,"
+					+ " trajanje = ?, distributer = ?,"
+					+ " zemlja_porekla = ?, godina_proizvodnje = ?,"
+					+ " opis = ?, obrisan = ? where id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			int i = 1;
+			preparedStatement.setString(i++, film.getNaziv());
+			if(film.getReziser()!= null) preparedStatement.setInt(i++, film.getReziser().getId());
+			preparedStatement.setInt(i++, film.getTrajanje());
+			preparedStatement.setString(i++, film.getDistributer());
+			preparedStatement.setString(i++, film.getZemljaPorekla());
+			preparedStatement.setInt(i++, film.getGodinaProizvodnje());
+			preparedStatement.setString(i++, film.getOpis());
+			preparedStatement.setBoolean(i++, film.getObrisan());
+			preparedStatement.setInt(i++, film.getId());
+			preparedStatement.executeUpdate();
+			
+			connection.commit();
+			return true;
 		} catch (Exception e) {
 			connection.rollback();
 			throw e;
@@ -145,19 +205,75 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			}
 
 		}
-		return false;
+		
 	}
 
 	@Override
 	public boolean delete(Identifiable object, boolean logickoBrisanje) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		if(logickoBrisanje) {
+			Film f = (Film)object;
+			f.setObrisan(true);
+			return update(f);
+		}
+		else return delete(object);
 	}
 
 	@Override
 	public boolean delete(Identifiable object) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		Film film = (Film) object;
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			connection.setAutoCommit(false);
+			connection.commit();
+
+			
+			query = "delete from film_glumac where film_id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, film.getId());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+
+			
+			query = "delete from film_zanr where film_id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, film.getId());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			
+			
+			query = "delete from film where id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			int i = 1;
+			preparedStatement.setInt(i++, film.getId());
+			preparedStatement.executeUpdate();
+			
+			connection.commit();
+			return true;
+		} catch (Exception e) {
+			connection.rollback();
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+
+		}
+		
 	}
 
 	@Override

@@ -38,11 +38,27 @@ public class InitListener implements ServletContextListener {
 		 * Auto-generated catch block e.printStackTrace(); }
 		 */
 		try {
-			DaoInterface.filmDao.getAll().stream().forEach(f -> System.out.println(f.toString()));
+			DaoInterface.filmDao.getAll().stream().forEach(f -> {
+				System.out.println(f.toString());
+				try {
+					if(((Film)f).getId() == 23) DaoInterface.filmDao.delete(f);
+					if(((Film)f).getId() == 22) DaoInterface.filmDao.delete(f, true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		try {
+//			System.out.println(DaoInterface.osobaDao.add(new Osoba(1, "test")));
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 	}
 
 	@Override
