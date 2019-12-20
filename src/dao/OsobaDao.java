@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import model.Identifiable;
 import model.Osoba;
 import model.Zanr;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class OsobaDao implements DaoInterface {
 
@@ -62,6 +61,52 @@ public class OsobaDao implements DaoInterface {
 			}
 		}
 	}
+	
+	public int add(Identifiable object, Connection connection) throws Exception {
+		//Da bi radila sa transakcijom prosledjuje se connection, ne  zatvara je
+		Osoba osoba = (Osoba) object;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection.setAutoCommit(false);
+			connection.commit();
+			String query = "Select count(*) from osoba where lower(osoba.ime_prezime) = lower(?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, osoba.getNaziv());
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.getInt(1) > 0) {
+				preparedStatement.close();
+				connection.rollback();
+
+			} else {
+				preparedStatement.close();
+				query = "insert into osoba(ime_prezime) values(?);";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, osoba.getNaziv());
+				preparedStatement.executeUpdate();
+
+				connection.commit();
+			}
+			query = "select id from osoba where lower(osoba.ime_prezime) = lower(?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, osoba.getNaziv());
+			return preparedStatement.executeQuery().getInt(1);
+
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e1) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			
+		}
+	}
 
 	@Override
 	public boolean update(Identifiable object) {
@@ -72,13 +117,45 @@ public class OsobaDao implements DaoInterface {
 	@Override
 	public boolean delete(Identifiable object) {
 		// TODO Auto-generated method stub
-		throw new NotImplementedException();
+		return false;
 	}
 
 	@Override
 	public Identifiable get(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			Osoba o = new Osoba();
+			query = "select id, ime_prezime from osoba where id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			o.setId(resultSet.getInt(1));
+			o.setNaziv(resultSet.getString(2));
+			
+			
+			return o;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e1) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+		}
 	}
 
 	@Override

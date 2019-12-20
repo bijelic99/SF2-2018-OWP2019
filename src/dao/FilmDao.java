@@ -125,7 +125,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
 			film.setGlumci(film.getGlumci().stream().map(o -> {
 				try {
-					o.setId(DaoInterface.osobaDao.add(o));
+					o.setId(DaoInterface.osobaDao.add(o,connection));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -137,15 +137,26 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			glumci = glumci.trim();
 			glumci = glumci.substring(0, glumci.length()-1);
 			
+			//System.out.println(glumci);
 			query = "delete from film_glumac where film_id = ? and glumac_id not in ( "+glumci+" )";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
+			
+			for(Osoba o : film.getGlumci()) {
+				query = "INSERT OR IGNORE INTO film_glumac " + 
+						"values(?,?)";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, film.getId());
+				preparedStatement.setInt(2, o.getId());
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				}
 
 			film.setZanrovi(film.getZanrovi().stream().map(z -> {
 				try {
-					z.setId(DaoInterface.zanrDao.add(z));
+					z.setId(DaoInterface.zanrDao.add(z, connection));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -154,25 +165,38 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			}).collect(Collectors.toCollection(ArrayList::new)));
 
 			String zanrovi = film.getZanrovi().stream().map(z -> z.getId()+"").reduce("", (ids, id) -> ids+id+", ");
-			zanrovi = zanrovi.strip();
+			zanrovi = zanrovi.trim();
 			zanrovi = zanrovi.substring(0, zanrovi.length()-1);
 			
+			//System.out.println(zanrovi);
 			query = "delete from film_zanr where film_id = ? and zanr_id not in ( "+zanrovi+" )";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			
-			if(film.getReziser()!= null) film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));	
-			//greska tu
-			query = "update film set naziv = ?, reziser_id = ?,"
+			for(Zanr z : film.getZanrovi()) {
+				query = "INSERT OR IGNORE INTO film_zanr " + 
+						"values(?,?)";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, film.getId());
+				preparedStatement.setInt(2, z.getId());
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				}
+			
+			
+			if(film.getReziser().getId() != 0) film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));	
+			
+			query = "update film set naziv = ?,"
+					+ ( film.getReziser().getId() != 0 ? " reziser_id = ?," : ", ")
 					+ " trajanje = ?, distributer = ?,"
 					+ " zemlja_porekla = ?, godina_proizvodnje = ?,"
 					+ " opis = ?, obrisan = ? where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			int i = 1;
 			preparedStatement.setString(i++, film.getNaziv());
-			if(film.getReziser()!= null) preparedStatement.setInt(i++, film.getReziser().getId());
+			if(film.getReziser().getId() != 0) preparedStatement.setInt(i++, film.getReziser().getId());
 			preparedStatement.setInt(i++, film.getTrajanje());
 			preparedStatement.setString(i++, film.getDistributer());
 			preparedStatement.setString(i++, film.getZemljaPorekla());

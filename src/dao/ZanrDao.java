@@ -11,7 +11,7 @@ import model.Osoba;
 import model.Zanr;
 
 public class ZanrDao implements DaoInterface {
-
+	
 	@Override
 	public int add(Identifiable object) throws Exception {
 		Zanr zanr = (Zanr) object;
@@ -19,6 +19,7 @@ public class ZanrDao implements DaoInterface {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
+
 			connection.setAutoCommit(false);
 			connection.commit();
 			String query = "Select count(*) from zanr where lower(zanr.naziv) = lower(?)";
@@ -64,6 +65,54 @@ public class ZanrDao implements DaoInterface {
 
 	}
 
+	public int add(Identifiable object, Connection connection) throws Exception {
+		// Da bi radila sa transakcijom prosledjuje se connection, ne zatvara je
+		Zanr zanr = (Zanr) object;
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+
+			connection.setAutoCommit(false);
+			connection.commit();
+			String query = "Select count(*) from zanr where lower(zanr.naziv) = lower(?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, zanr.getNaziv());
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.getInt(1) > 0) {
+				preparedStatement.close();
+				connection.rollback();
+
+			} else {
+				preparedStatement.close();
+				query = "insert into zanr(naziv) values(?);";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, zanr.getNaziv());
+				preparedStatement.executeUpdate();
+
+				connection.commit();
+			}
+			query = "select id from zanr where lower(zanr.naziv) = lower(?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, zanr.getNaziv());
+			return preparedStatement.executeQuery().getInt(1);
+
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e1) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+
+		}
+	}
+
 	@Override
 	public boolean update(Identifiable object) {
 		// TODO Auto-generated method stub
@@ -93,8 +142,8 @@ public class ZanrDao implements DaoInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public ArrayList<Zanr> getZanrForFilm(int filmId) throws Exception{
+
+	public ArrayList<Zanr> getZanrForFilm(int filmId) throws Exception {
 		ArrayList<Zanr> zanrovi = new ArrayList<Zanr>();
 		Connection connection = ConnectionManager.getConnection();
 		PreparedStatement preparedStatement = null;
@@ -105,21 +154,21 @@ public class ZanrDao implements DaoInterface {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, filmId);
 			resultSet = preparedStatement.executeQuery();
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				Zanr zanr = new Zanr();
 				zanr.setId(resultSet.getInt(1));
 				zanr.setNaziv(resultSet.getString(2));
 				zanrovi.add(zanr);
 			}
-			
+
 		} catch (Exception e) {
-			
+
 			throw e;
 		} finally {
 			try {
 				resultSet.close();
 			} catch (Exception e) {
-				
+
 			}
 			try {
 				preparedStatement.close();
@@ -131,7 +180,7 @@ public class ZanrDao implements DaoInterface {
 			} catch (Exception e) {
 
 			}
-			
+
 		}
 		return zanrovi;
 	}

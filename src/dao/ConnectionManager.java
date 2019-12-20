@@ -21,7 +21,7 @@ public class ConnectionManager {
 			
 			Properties dsp = new Properties();
 			dsp.setProperty("driverClassName", "org.sqlite.JDBC");
-			dsp.setProperty("url", "jdbc:sqlite:" + LinuxPATH);
+			dsp.setProperty("url", "jdbc:sqlite:" + WindowsPATH);
 			
 			dataSource = BasicDataSourceFactory.createDataSource(dsp);
 		} catch (Exception e) {
