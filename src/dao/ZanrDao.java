@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import model.Film;
 import model.Identifiable;
@@ -20,8 +21,7 @@ public class ZanrDao implements DaoInterface {
 		ResultSet resultSet = null;
 		try {
 
-			connection.setAutoCommit(false);
-			connection.commit();
+			
 			String query = "Select count(*) from zanr where lower(zanr.naziv) = lower(?)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, zanr.getNaziv());
@@ -38,7 +38,7 @@ public class ZanrDao implements DaoInterface {
 				preparedStatement.setString(1, zanr.getNaziv());
 				preparedStatement.executeUpdate();
 
-				connection.commit();
+				
 			}
 			query = "select id from zanr where lower(zanr.naziv) = lower(?)";
 			preparedStatement = connection.prepareStatement(query);
@@ -132,7 +132,7 @@ public class ZanrDao implements DaoInterface {
 	}
 
 	@Override
-	public ArrayList<Identifiable> get(FilterInterface filterFunction) throws Exception {
+	public ArrayList<Identifiable> get(Predicate<Identifiable> filterFunction) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

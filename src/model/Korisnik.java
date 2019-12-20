@@ -7,15 +7,18 @@ public class Korisnik extends Identifiable {
 	private String password;
 	private Date datumRegistracije;
 	private Uloga uloga;
-	public Korisnik(int id, String username, String password, Date datumRegistracije, Uloga uloga) {
+	private Boolean obrisan;
+	
+	public Korisnik(int id, String username, String password, Date datumRegistracije, Uloga uloga, Boolean obrisan) {
 		super(id);
 		this.username = username;
 		this.password = password;
 		this.datumRegistracije = datumRegistracije;
 		this.uloga = uloga;
+		this.obrisan = obrisan;
 	}
 	public Korisnik() {
-		this(0, "", "", new Date(), new Uloga(1, "Obican"));
+		this(0, "", "", new Date(), Uloga.Obican, false);
 	}
 	public String getUsername() {
 		return username;
@@ -41,6 +44,11 @@ public class Korisnik extends Identifiable {
 	public void setUloga(Uloga uloga) {
 		this.uloga = uloga;
 	}
-	
+	public Boolean getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(Boolean obrisan) {
+		this.obrisan = obrisan;
+	}
 	
 }

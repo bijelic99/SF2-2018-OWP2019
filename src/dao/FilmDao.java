@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import model.Film;
@@ -353,8 +354,8 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 	}
 
 	@Override
-	public ArrayList<Identifiable> get(FilterInterface filterFunction) throws Exception {
-		return getAll().stream().filter(i -> filterFunction.filter(i)).collect(Collectors.toCollection(ArrayList::new));
+	public ArrayList<Identifiable> get(Predicate<Identifiable> filterFunction) throws Exception {
+		return getAll().stream().filter(filterFunction).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	@Override

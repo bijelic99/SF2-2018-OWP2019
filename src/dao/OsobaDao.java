@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import model.Identifiable;
 import model.Osoba;
@@ -68,8 +69,7 @@ public class OsobaDao implements DaoInterface {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			connection.setAutoCommit(false);
-			connection.commit();
+			
 			String query = "Select count(*) from osoba where lower(osoba.ime_prezime) = lower(?)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, osoba.getNaziv());
@@ -86,7 +86,7 @@ public class OsobaDao implements DaoInterface {
 				preparedStatement.setString(1, osoba.getNaziv());
 				preparedStatement.executeUpdate();
 
-				connection.commit();
+				
 			}
 			query = "select id from osoba where lower(osoba.ime_prezime) = lower(?)";
 			preparedStatement = connection.prepareStatement(query);
@@ -133,9 +133,10 @@ public class OsobaDao implements DaoInterface {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			resultSet.next();
+			if(resultSet.next()) {
 			o.setId(resultSet.getInt(1));
-			o.setNaziv(resultSet.getString(2));
+			o.setNaziv(resultSet.getString(2));}
+			else throw new Exception("Nema Osoba sa ovim imenom");
 			
 			
 			return o;
@@ -159,7 +160,7 @@ public class OsobaDao implements DaoInterface {
 	}
 
 	@Override
-	public ArrayList<Identifiable> get(FilterInterface filterFunction) throws Exception {
+	public ArrayList<Identifiable> get(Predicate<Identifiable> filterFunction) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
