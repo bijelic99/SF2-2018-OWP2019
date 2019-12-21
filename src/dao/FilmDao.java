@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -118,7 +117,6 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		Film film = (Film) object;
 		Connection connection = ConnectionManager.getConnection();
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 		String query = "";
 		try {
 			connection.setAutoCommit(false);
@@ -214,11 +212,6 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			throw e;
 		} finally {
 			try {
-				resultSet.close();
-			} catch (Exception e) {
-
-			}
-			try {
 				preparedStatement.close();
 			} catch (Exception e) {
 
@@ -248,7 +241,6 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		Film film = (Film) object;
 		Connection connection = ConnectionManager.getConnection();
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 		String query = "";
 		try {
 			connection.setAutoCommit(false);
@@ -281,11 +273,6 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			connection.rollback();
 			throw e;
 		} finally {
-			try {
-				resultSet.close();
-			} catch (Exception e) {
-
-			}
 			try {
 				preparedStatement.close();
 			} catch (Exception e) {

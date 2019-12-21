@@ -15,4 +15,44 @@
   <listener>
     <listener-class>controller.InitListener</listener-class>
   </listener>
+  <servlet>
+    <description></description>
+    <display-name>RegisterServlet</display-name>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>controller.register.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/Register</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SuccessServlet</display-name>
+    <servlet-name>SuccessServlet</servlet-name>
+    <servlet-class>controller.status.SuccessServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SuccessServlet</servlet-name>
+    <url-pattern>/Success</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FailureServlet</display-name>
+    <servlet-name>FailureServlet</servlet-name>
+    <servlet-class>controller.status.FailureServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FailureServlet</servlet-name>
+    <url-pattern>/Failure</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UniqueUsernameServlet</display-name>
+    <servlet-name>UniqueUsernameServlet</servlet-name>
+    <servlet-class>controller.register.UniqueUsernameServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UniqueUsernameServlet</servlet-name>
+    <url-pattern>/UniqueUsername</url-pattern>
+  </servlet-mapping>
 </web-app>

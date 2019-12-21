@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 
 import model.Identifiable;
 import model.Osoba;
-import model.Zanr;
 
 public class OsobaDao implements DaoInterface {
 

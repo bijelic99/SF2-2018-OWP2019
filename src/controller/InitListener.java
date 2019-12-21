@@ -37,34 +37,34 @@ public class InitListener implements ServletContextListener {
 		 * try { DaoInterface.filmDao.add(f); } catch (Exception e) { // TODO
 		 * Auto-generated catch block e.printStackTrace(); }
 		 */
-		try {
-			DaoInterface.filmDao.getAll().stream().forEach(f -> {
-				System.out.println(f.toString());
-				try {
-					System.out.println(((Film)f).getReziser().getNaziv());
-					
-					if(((Film)f).getId() == 21) {
-						Film film = (Film)f;
-						ArrayList<Osoba> a = new ArrayList<Osoba>();
-						a.add(new Osoba(5, "Mario"));
-						a.add(new Osoba(5, "Luigi"));
-						film.setGlumci(a);
-						ArrayList<Zanr> b = new ArrayList<Zanr>();
-						b.add(new Zanr(4,"horor"));
-						b.add(new Zanr(4,"tragikomedija"));
-						film.setZanrovi(b);
-						DaoInterface.filmDao.update(film);
-					}
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			DaoInterface.filmDao.getAll().stream().forEach(f -> {
+//				System.out.println(f.toString());
+//				try {
+//					System.out.println(((Film)f).getReziser().getNaziv());
+//					
+//					if(((Film)f).getId() == 21) {
+//						Film film = (Film)f;
+//						ArrayList<Osoba> a = new ArrayList<Osoba>();
+//						a.add(new Osoba(5, "Mario"));
+//						a.add(new Osoba(5, "Luigi"));
+//						film.setGlumci(a);
+//						ArrayList<Zanr> b = new ArrayList<Zanr>();
+//						b.add(new Zanr(4,"horor"));
+//						b.add(new Zanr(4,"tragikomedija"));
+//						film.setZanrovi(b);
+//						DaoInterface.filmDao.update(film);
+//					}
+//					
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			});
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		try {
 //			System.out.println(DaoInterface.osobaDao.add(new Osoba(1, "test")));
 //		} catch (Exception e) {
