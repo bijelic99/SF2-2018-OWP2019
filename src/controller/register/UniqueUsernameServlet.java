@@ -34,12 +34,14 @@ public class UniqueUsernameServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		ObjectMapper om = new ObjectMapper();
 		response.setContentType("application/json; charset=UTF-8");
 		Map<String, Boolean> available = new HashMap<String, Boolean>();
 		
 		
 		String username = request.getParameter("data");
+		System.out.println(username);
 		try {
 			
 			if (DaoInterface.korisnikDao.get(i -> {
@@ -51,6 +53,7 @@ public class UniqueUsernameServlet extends HttpServlet {
 				available.put("available", false);
 			response.getWriter().write(om.writeValueAsString(available));
 			response.getWriter().close();
+			response.setStatus(HttpServletResponse.SC_OK);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -58,5 +61,9 @@ public class UniqueUsernameServlet extends HttpServlet {
 		}
 
 	}
+	
+	
+	
+	
 
 }

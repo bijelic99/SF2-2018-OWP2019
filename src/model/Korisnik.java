@@ -20,6 +20,11 @@ public class Korisnik extends Identifiable {
 	public Korisnik() {
 		this(0, "", "", new Date(), Uloga.Obican, false);
 	}
+	public Korisnik(KorisnikFromFrontend korisnik) {
+		this();
+		this.username = korisnik.getUsername();
+		this.password = korisnik.getPassword();
+	}
 	public String getUsername() {
 		return username;
 	}

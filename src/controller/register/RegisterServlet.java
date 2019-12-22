@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DaoInterface;
 import model.Korisnik;
+import model.KorisnikFromFrontend;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -34,7 +35,8 @@ public class RegisterServlet extends HttpServlet {
 		try {
 			ObjectMapper om = new ObjectMapper();
 			String korisnikJSON = request.getParameter("data");
-			Korisnik korisnik = om.readerFor(Korisnik.class).readValue(korisnikJSON);
+			KorisnikFromFrontend korisnikShort = om.readerFor(KorisnikFromFrontend.class).readValue(korisnikJSON);
+			Korisnik korisnik = new Korisnik(korisnikShort);
 			DaoInterface.korisnikDao.add(korisnik);
 			response.setStatus(HttpServletResponse.SC_OK);
 		} catch (Exception e) {
