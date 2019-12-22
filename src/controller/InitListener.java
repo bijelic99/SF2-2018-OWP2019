@@ -24,6 +24,8 @@ public class InitListener implements ServletContextListener {
 		// TODO Auto-generated constructor stub
 		ConnectionManager.open();
 		System.out.println("Povezano");
+		
+		System.out.println();
 		/*
 		 * //test Film f = new Film(); f.setNaziv("testFilm"); f.setReziser(new
 		 * Osoba(0,"Test")); ArrayList<Osoba> glumci = new ArrayList<Osoba>();

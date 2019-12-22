@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import javax.swing.text.Utilities;
+
 import model.Identifiable;
 import model.Korisnik;
 import model.Uloga;
@@ -181,7 +183,7 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		ResultSet resultSet = null;
 		String query = "";
 		try {
-			query = "select id, username, password, datum_registracije, uloga_id, obrisan from korisnik where obrisan = false;";
+			query = "select id, username, password,  strftime('%s', datetime(datum_registracije)) as datum_registracije, uloga_id, obrisan from korisnik where obrisan = false;";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -190,7 +192,7 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				korisnik.setId(resultSet.getInt(i++));
 				korisnik.setUsername(resultSet.getString(i++));
 				korisnik.setPassword(resultSet.getString(i++));
-				korisnik.setDatumRegistracije(new Date(resultSet.getDate(i++).getTime()));
+				korisnik.setDatumRegistracije(new java.util.Date(resultSet.getLong(i++)));
 				korisnik.setUloga(Uloga.getById(resultSet.getInt(i++)));
 				korisnik.setObrisan(resultSet.getBoolean(i++));
 				korisnici.add(korisnik);

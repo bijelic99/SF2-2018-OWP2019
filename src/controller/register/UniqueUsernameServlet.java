@@ -32,6 +32,7 @@ public class UniqueUsernameServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -40,13 +41,13 @@ public class UniqueUsernameServlet extends HttpServlet {
 		Map<String, Boolean> available = new HashMap<String, Boolean>();
 		
 		
-		String username = request.getParameter("data");
-		System.out.println(username);
+		String username = request.getParameter("username");
+		System.out.println(request.toString());
 		try {
 			
 			if (DaoInterface.korisnikDao.get(i -> {
 				Korisnik k = (Korisnik) i;
-				return k.getUsername() == username;
+				return k.getUsername().equals(username.trim());
 			}).isEmpty())
 				available.put("available", true);
 			else
@@ -61,6 +62,22 @@ public class UniqueUsernameServlet extends HttpServlet {
 		}
 
 	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
+		System.out.println("saasdsdas");
+	}
+
+	@Override
+	protected void doOptions(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doOptions(arg0, arg1);
+		System.out.println("saasdsdas");
+	}
+
+	
 	
 	
 	
