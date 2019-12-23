@@ -1,6 +1,9 @@
 package controller.register;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,16 +35,23 @@ public class RegisterServlet extends HttpServlet {
 	 */
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Map<String,Boolean> successfull = new HashMap<String, Boolean>();
+		ObjectMapper om = new ObjectMapper();
 		try {
-			ObjectMapper om = new ObjectMapper();
-			String korisnikJSON = request.getParameter("data");
+			
+			String korisnikJSON =  request.getReader().readLine();
+			//System.out.println(korisnikJSON);
 			KorisnikFromFrontend korisnikShort = om.readerFor(KorisnikFromFrontend.class).readValue(korisnikJSON);
 			Korisnik korisnik = new Korisnik(korisnikShort);
 			DaoInterface.korisnikDao.add(korisnik);
 			response.setStatus(HttpServletResponse.SC_OK);
+			successfull.put("successfull", true);
 		} catch (Exception e) {
-			response.sendError(406, e.getMessage());
+			successfull.put("successfull", false);
 		}
+		response.getWriter().write(om.writeValueAsString(successfull));
+		response.getWriter().close();
+		response.setStatus(HttpServletResponse.SC_OK);
 		
 	}
 

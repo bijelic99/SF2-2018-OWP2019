@@ -1,6 +1,8 @@
 package controller.register;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,19 +37,16 @@ public class UniqueUsernameServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		ObjectMapper om = new ObjectMapper();
-		response.setContentType("application/json; charset=UTF-8");
-		Map<String, Boolean> available = new HashMap<String, Boolean>();
-		
-		
-		String username = request.getParameter("username");
-		System.out.println(request.toString());
+			ObjectMapper om = new ObjectMapper();
 		try {
-			
+			String jsonUsername = request.getReader().readLine();
+			//System.out.println(jsonUsername);
+			Map<String,String> usernameMap = om.readValue(jsonUsername, Map.class);
+			Map<String,Boolean> available = new HashMap<String, Boolean>();
+			//System.out.println(usernameMap.get("username"));
 			if (DaoInterface.korisnikDao.get(i -> {
 				Korisnik k = (Korisnik) i;
-				return k.getUsername().equals(username.trim());
+				return k.getUsername().equals(usernameMap.get("username").trim());
 			}).isEmpty())
 				available.put("available", true);
 			else
