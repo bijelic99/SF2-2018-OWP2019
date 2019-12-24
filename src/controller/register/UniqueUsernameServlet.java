@@ -66,14 +66,12 @@ public class UniqueUsernameServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		super.doGet(req, resp);
-		System.out.println("saasdsdas");
 	}
 
 	@Override
 	protected void doOptions(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		super.doOptions(arg0, arg1);
-		System.out.println("saasdsdas");
 	}
 
 	
