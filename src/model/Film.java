@@ -12,9 +12,10 @@ public class Film extends NamedIdentifiable {
 	private int godinaProizvodnje;
 	private String opis;
 	private Boolean obrisan;
+	private String pathDoSlike;
 	
 	public Film(int id, String naziv, ArrayList<Zanr> zanrovi, Osoba reziser, ArrayList<Osoba> glumci, int trajanje,
-			String distributer, String zemljaPorekla, int godinaProizvodnje, String opis, Boolean obrisan) {
+			String distributer, String zemljaPorekla, int godinaProizvodnje, String opis, Boolean obrisan, String pathDoSlike) {
 		super(id, naziv);
 		this.zanrovi = zanrovi;
 		this.reziser = reziser;
@@ -25,9 +26,10 @@ public class Film extends NamedIdentifiable {
 		this.godinaProizvodnje = godinaProizvodnje;
 		this.opis = opis;
 		this.setObrisan(obrisan);
+		this.setPathDoSlike(pathDoSlike);
 	}
 	public Film() {
-		this(0, "", new ArrayList<Zanr>(), new Osoba(), new ArrayList<Osoba>(), 0, "", "", 0, "", false);
+		this(0, "", new ArrayList<Zanr>(), new Osoba(), new ArrayList<Osoba>(), 0, "", "", 0, "", false, "");
 	}
 	public ArrayList<Zanr> getZanrovi() {
 		return zanrovi;
@@ -82,6 +84,12 @@ public class Film extends NamedIdentifiable {
 	}
 	public void setObrisan(Boolean obrisan) {
 		this.obrisan = obrisan;
+	}
+	public String getPathDoSlike() {
+		return pathDoSlike;
+	}
+	public void setPathDoSlike(String pathDoSlike) {
+		this.pathDoSlike = pathDoSlike;
 	}
 	
 	

@@ -91,6 +91,12 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 					e2.printStackTrace();
 				}
 			});
+			
+			query = "insert into film_slika values(?, ?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, film.getId());
+			preparedStatement.setString(2, film.getPathDoSlike());
+			preparedStatement.executeUpdate();
 
 			connection.commit();
 			return film.getId();
@@ -185,7 +191,14 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				}
 			
 			
-			if(film.getReziser().getId() != 0) film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));	
+			if(film.getReziser().getId() != 0) film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));
+			
+			query = "update film_slika set linkDoSlike = ? where film_id = ?";
+			preparedStatement.setString(1, film.getPathDoSlike());
+			preparedStatement.setInt(2, film.getId());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			
 			
 			query = "update film set naziv = ?,"
 					+ ( film.getReziser().getId() != 0 ? " reziser_id = ?," : ", ")
@@ -260,12 +273,17 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			
+			query = "delete from film_slika where film_id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, film.getId());
+			preparedStatement.executeUpdate();
 			
 			query = "delete from film where id = ?";
 			preparedStatement = connection.prepareStatement(query);
-			int i = 1;
-			preparedStatement.setInt(i++, film.getId());
+			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
+			
+			
 			
 			connection.commit();
 			return true;
@@ -296,7 +314,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		ResultSet resultSet = null;
 		String query = "";
 		try {
-			query = "select id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis from film where id = ?";
+			query = "select id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, ifnull(linkDoSlike, '') from film left join film_slika on film.id = film_slika.film_id where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -313,6 +331,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				film.setOpis(resultSet.getString(i++));
 				film.setZanrovi(DaoInterface.zanrDao.getZanrForFilm(film.getId()));
 				film.setGlumci(DaoInterface.osobaDao.getGlumciForFilm(film.getId()));
+				film.setPathDoSlike(resultSet.getString(i++));
 
 			}
 
@@ -353,7 +372,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		ResultSet resultSet = null;
 		String query = "";
 		try {
-			query = "select id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis from film where obrisan = false";
+			query = "select id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, ifnull(linkDoSlike, '') from film left join film_slika on film.id = film_slika.film_id where obrisan = false";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -369,6 +388,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				film.setOpis(resultSet.getString(i++));
 				film.setZanrovi(DaoInterface.zanrDao.getZanrForFilm(film.getId()));
 				film.setGlumci(DaoInterface.osobaDao.getGlumciForFilm(film.getId()));
+				film.setPathDoSlike(resultSet.getString(i++));
 				filmovi.add(film);
 
 			}
