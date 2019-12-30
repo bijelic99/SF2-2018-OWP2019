@@ -139,8 +139,44 @@ public class ZanrDao implements DaoInterface {
 
 	@Override
 	public ArrayList<Identifiable> getAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Identifiable> zanrovi = new ArrayList<Identifiable>();
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			query = "select id, naziv from zanr";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Zanr zanr = new Zanr();
+				zanr.setId(resultSet.getInt(1));
+				zanr.setNaziv(resultSet.getString(2));
+				zanrovi.add(zanr);
+			}
+
+		} catch (Exception e) {
+
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+
+		}
+		return zanrovi;
 	}
 
 	public ArrayList<Zanr> getZanrForFilm(int filmId) throws Exception {

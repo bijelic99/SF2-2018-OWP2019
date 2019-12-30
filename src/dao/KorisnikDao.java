@@ -127,7 +127,7 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		ResultSet resultSet = null;
 		String query = "";
 		try {
-			query = "select id, username, password, datum_registracije, uloga_id, obrisan from korisnik where id = ?";
+			query = "select id, username, password, strftime('%s', datetime(datum_registracije)) as datum_registracije, uloga_id, obrisan from korisnik where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -137,7 +137,7 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				korisnik.setId(resultSet.getInt(i++));
 				korisnik.setUsername(resultSet.getString(i++));
 				korisnik.setPassword(resultSet.getString(i++));
-				korisnik.setDatumRegistracije(new Date(resultSet.getDate(i++).getTime()));
+				korisnik.setDatumRegistracije(new java.util.Date(resultSet.getLong(i++)));
 				korisnik.setUloga(Uloga.getById(resultSet.getInt(i++)));
 				korisnik.setObrisan(resultSet.getBoolean(i++));
 				return korisnik;

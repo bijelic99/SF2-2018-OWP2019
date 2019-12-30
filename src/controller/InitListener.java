@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dao.ConnectionManager;
 import dao.DaoInterface;
 import model.Film;
@@ -24,8 +27,16 @@ public class InitListener implements ServletContextListener {
 		// TODO Auto-generated constructor stub
 		ConnectionManager.open();
 		System.out.println("Povezano");
-		
-		System.out.println();
+//		ObjectMapper om = new ObjectMapper();
+//		try {
+//			System.out.println(om.writeValueAsString(DaoInterface.korisnikDao.get(1)));
+//		} catch (JsonProcessingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		/*
 		 * //test Film f = new Film(); f.setNaziv("testFilm"); f.setReziser(new
 		 * Osoba(0,"Test")); ArrayList<Osoba> glumci = new ArrayList<Osoba>();

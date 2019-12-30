@@ -166,8 +166,44 @@ public class OsobaDao implements DaoInterface {
 
 	@Override
 	public ArrayList<Identifiable> getAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Identifiable> osobe = new ArrayList<Identifiable>();
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		try {
+			query = "select id, ime_prezime from osoba";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Osoba osoba = new Osoba();
+				osoba.setId(resultSet.getInt(1));
+				osoba.setNaziv(resultSet.getString(2));
+				osobe.add(osoba);
+			}
+			
+		} catch (Exception e) {
+			
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+				
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+			
+		}
+		return osobe;
 	}
 
 	public ArrayList<Osoba> getGlumciForFilm(int id) throws Exception{
