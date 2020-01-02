@@ -18,7 +18,7 @@ import model.KorisnikFromFrontend;
 /**
  * Servlet implementation class RegisterServlet
  */
-public class RegisterServlet extends HttpServlet {
+public class RegisterServlet extends controller.login.AuthenticationRequired {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -44,14 +44,10 @@ public class RegisterServlet extends HttpServlet {
 			KorisnikFromFrontend korisnikShort = om.readerFor(KorisnikFromFrontend.class).readValue(korisnikJSON);
 			Korisnik korisnik = new Korisnik(korisnikShort);
 			DaoInterface.korisnikDao.add(korisnik);
-			response.setStatus(HttpServletResponse.SC_OK);
-			successfull.put("successfull", true);
+			request.getRequestDispatcher("/Success").forward(request, response);
 		} catch (Exception e) {
-			successfull.put("successfull", false);
+			request.getRequestDispatcher("/Failure").forward(request, response);
 		}
-		response.getWriter().write(om.writeValueAsString(successfull));
-		response.getWriter().close();
-		response.setStatus(HttpServletResponse.SC_OK);
 		
 	}
 

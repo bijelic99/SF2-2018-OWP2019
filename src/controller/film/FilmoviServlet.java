@@ -2,6 +2,7 @@ package controller.film;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,11 +13,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DaoInterface;
 import model.Identifiable;
+import model.Uloga;
+import controller.login.AuthenticationRequired;
 
 /**
  * Servlet implementation class FilmoviServlet
  */
-public class FilmoviServlet extends HttpServlet {
+public class FilmoviServlet extends AuthenticationRequired {
 	private static final long serialVersionUID = 1L;
        
     /**

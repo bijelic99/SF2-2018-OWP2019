@@ -19,7 +19,7 @@ import model.Korisnik;
 /**
  * Servlet implementation class UniqueUsernameServlet
  */
-public class UniqueUsernameServlet extends HttpServlet {
+public class UniqueUsernameServlet extends controller.login.AuthenticationRequired {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -42,18 +42,15 @@ public class UniqueUsernameServlet extends HttpServlet {
 			String jsonUsername = request.getReader().readLine();
 			//System.out.println(jsonUsername);
 			Map<String,String> usernameMap = om.readValue(jsonUsername, Map.class);
-			Map<String,Boolean> available = new HashMap<String, Boolean>();
 			//System.out.println(usernameMap.get("username"));
 			if (DaoInterface.korisnikDao.get(i -> {
 				Korisnik k = (Korisnik) i;
 				return k.getUsername().equals(usernameMap.get("username").trim());
 			}).isEmpty())
-				available.put("available", true);
+				request.getRequestDispatcher("/Success").forward(request, response);
 			else
-				available.put("available", false);
-			response.getWriter().write(om.writeValueAsString(available));
-			response.getWriter().close();
-			response.setStatus(HttpServletResponse.SC_OK);
+				request.getRequestDispatcher("/Failure").forward(request, response);
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -16,7 +16,7 @@ import model.Identifiable;
 /**
  * Servlet implementation class FilmskiRadniciServlet
  */
-public class FilmskiRadniciServlet extends HttpServlet {
+public class FilmskiRadniciServlet extends controller.login.AuthenticationRequired {
 	private static final long serialVersionUID = 1L;
        
     /**
