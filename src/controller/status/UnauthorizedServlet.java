@@ -27,6 +27,7 @@ public class UnauthorizedServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Sadrzaj kojem pokusavate da pristupite zahteva prijavu");
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 
 	/**

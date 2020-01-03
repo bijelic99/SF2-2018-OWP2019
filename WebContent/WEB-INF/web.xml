@@ -16,6 +16,78 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+  <filter>
+    <display-name>AuthenticationRequieredOnGetAction</display-name>
+    <filter-name>AuthenticationRequieredOnGetAction</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.AuthenticationRequieredOnGetAction</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthenticationRequieredOnGetAction</filter-name>
+    <url-pattern>/AuthenticationRequieredOnGetAction</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>AutenthicationRequieredOnPostAction</display-name>
+    <filter-name>AutenthicationRequieredOnPostAction</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.AutenthicationRequieredOnPostAction</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AutenthicationRequieredOnPostAction</filter-name>
+    <url-pattern>/AutenthicationRequieredOnPostAction</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>AuthenticationRequieredOnPutAction</display-name>
+    <filter-name>AuthenticationRequieredOnPutAction</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.AuthenticationRequieredOnPutAction</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthenticationRequieredOnPutAction</filter-name>
+    <url-pattern>/AuthenticationRequieredOnPutAction</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>AuthenticationRequieredOnDeleteAction</display-name>
+    <filter-name>AuthenticationRequieredOnDeleteAction</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.AuthenticationRequieredOnDeleteAction</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthenticationRequieredOnDeleteAction</filter-name>
+    <url-pattern>/AuthenticationRequieredOnDeleteAction</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>AdminRoleRequieredOnGetActionFilter</display-name>
+    <filter-name>AdminRoleRequieredOnGetActionFilter</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.adminRoleRequieredFilter.AdminRoleRequieredOnGetActionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminRoleRequieredOnGetActionFilter</filter-name>
+    <url-pattern>/AdminRoleRequieredOnGetActionFilter</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>AdminRoleRequieredOnPostActionFilter</display-name>
+    <filter-name>AdminRoleRequieredOnPostActionFilter</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.adminRoleRequieredFilter.AdminRoleRequieredOnPostActionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminRoleRequieredOnPostActionFilter</filter-name>
+    <url-pattern>/AdminRoleRequieredOnPostActionFilter</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>AdminRoleRequieredOnPutActionFilter</display-name>
+    <filter-name>AdminRoleRequieredOnPutActionFilter</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.adminRoleRequieredFilter.AdminRoleRequieredOnPutActionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminRoleRequieredOnPutActionFilter</filter-name>
+    <url-pattern>/AdminRoleRequieredOnPutActionFilter</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>AdminRoleRequieredOnDeleteActionFilter</display-name>
+    <filter-name>AdminRoleRequieredOnDeleteActionFilter</filter-name>
+    <filter-class>controller.login.authentificationRequieredFilters.adminRoleRequieredFilter.AdminRoleRequieredOnDeleteActionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminRoleRequieredOnDeleteActionFilter</filter-name>
+    <url-pattern>/AdminRoleRequieredOnDeleteActionFilter</url-pattern>
+  </filter-mapping>
   <listener>
     <listener-class>controller.InitListener</listener-class>
   </listener>
@@ -132,4 +204,5 @@
     <servlet-name>UnauthorizedServlet</servlet-name>
     <url-pattern>/Unauthorized</url-pattern>
   </servlet-mapping>
+  
 </web-app>
