@@ -16,7 +16,7 @@ import model.Identifiable;
 /**
  * Servlet implementation class ZanroviServlet
  */
-public class ZanroviServlet extends controller.login.AuthenticationRequired {
+public class ZanroviServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**

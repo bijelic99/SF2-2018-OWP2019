@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +21,7 @@ import model.KorisnikFromFrontend;
 /**
  * Servlet implementation class LoginServlet
  */
-public class LoginServlet extends AuthenticationRequired {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -51,20 +52,27 @@ public class LoginServlet extends AuthenticationRequired {
 				return ko.getUsername().equals(korisnikLogin.getUsername()) && ko.getPassword().equals(korisnikLogin.getPassword());
 			});
 			if(!nadjeniKorisnici.isEmpty()) {
+				Korisnik korisnik =  (Korisnik) nadjeniKorisnici.get(0);
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("loggedInUser", korisnik);
 				
 				HashMap<String, Object> resHm = new HashMap<String, Object>();
-				resHm.put("user", nadjeniKorisnici.get(0));
+				resHm.put("user", korisnik);
 				resHm.put("successful", true);
 				response.setContentType("application/json; charset=UTF-8");
 				response.setStatus(HttpServletResponse.SC_OK);
 				response.getWriter().write(om.writeValueAsString(resHm));
 				response.getWriter().close();
 				
+				
+				
 			}
 			else throw new Exception("Wrong username or password");
 			
 			
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			request.getRequestDispatcher("/Failure").forward(request, response);
 		}
 	}

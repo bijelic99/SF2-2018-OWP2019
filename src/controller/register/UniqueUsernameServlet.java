@@ -19,7 +19,7 @@ import model.Korisnik;
 /**
  * Servlet implementation class UniqueUsernameServlet
  */
-public class UniqueUsernameServlet extends controller.login.AuthenticationRequired {
+public class UniqueUsernameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

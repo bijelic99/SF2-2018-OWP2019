@@ -18,7 +18,7 @@ import model.KorisnikFromFrontend;
 /**
  * Servlet implementation class RegisterServlet
  */
-public class RegisterServlet extends controller.login.AuthenticationRequired {
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
