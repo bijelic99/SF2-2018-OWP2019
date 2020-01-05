@@ -17,6 +17,7 @@ public class ZanrDao implements DaoInterface {
 	public int add(Identifiable object) throws Exception {
 		Zanr zanr = (Zanr) object;
 		Connection connection = ConnectionManager.getConnection();
+		connection.setAutoCommit(false);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {

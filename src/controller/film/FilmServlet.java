@@ -1,6 +1,8 @@
 package controller.film;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -13,7 +15,9 @@ import org.apache.naming.ContextAccessController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DaoInterface;
+import miscellaneous.DataParsingHelper;
 import model.Film;
+import model.KorisnikFromFrontend;
 import model.Uloga;
 
 /**
@@ -54,22 +58,52 @@ public class FilmServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		ObjectMapper om = new ObjectMapper();
+		try {
+			String jsonFilm = DataParsingHelper.getJsonFromBufferReader(request.getReader());
+			//System.out.println(jsonFilm);
+			Film film = om.readerFor(Film.class).readValue(jsonFilm);
+			int id = DaoInterface.filmDao.add(film);
+			request.setAttribute("id", id);
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		ObjectMapper om = new ObjectMapper();
+		try {
+			String jsonFilm = DataParsingHelper.getJsonFromBufferReader(request.getReader());
+			Film film = om.readerFor(Film.class).readValue(jsonFilm);
+			DaoInterface.filmDao.update(film);
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		ObjectMapper om = new ObjectMapper();
+		try {
+			String jsonFilmId = DataParsingHelper.getJsonFromBufferReader(request.getReader());
+			HashMap<String, Integer> filmIdMap = om.readerFor(HashMap.class).readValue(jsonFilmId);
+			Film film = (Film) DaoInterface.filmDao.get(filmIdMap.get("id"));
+			DaoInterface.filmDao.delete(film, DaoInterface.filmDao.filmHasProjections(film.getId()));
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
 	}
 
 }

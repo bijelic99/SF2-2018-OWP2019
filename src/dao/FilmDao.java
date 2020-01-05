@@ -12,6 +12,7 @@ import model.Film;
 import model.Identifiable;
 import model.Osoba;
 import model.Zanr;
+import model.Projekcija;
 
 public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
@@ -415,6 +416,10 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
 		}
 		return filmovi;
+	}
+	
+	public Boolean filmHasProjections(int filmId) throws Exception {
+		return DaoInterface.projekcijaDao.get(p-> ((Projekcija)p).getFilm().getId() == filmId).isEmpty();
 	}
 
 }
