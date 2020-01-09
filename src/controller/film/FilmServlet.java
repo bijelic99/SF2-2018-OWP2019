@@ -3,6 +3,7 @@ package controller.film;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -93,17 +94,25 @@ public class FilmServlet extends HttpServlet {
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		try {
-			String jsonFilmId = DataParsingHelper.getJsonFromBufferReader(request.getReader());
-			HashMap<String, Integer> filmIdMap = om.readerFor(HashMap.class).readValue(jsonFilmId);
-			Film film = (Film) DaoInterface.filmDao.get(filmIdMap.get("id"));
-			DaoInterface.filmDao.delete(film, DaoInterface.filmDao.filmHasProjections(film.getId()));
+			String strFilmId = request.getParameter("id");
+			if(strFilmId != null) {
+			int filmId = Integer.parseInt(strFilmId);
+			Film film = (Film) DaoInterface.filmDao.get(filmId);
+			DaoInterface.filmDao.delete(film, !DaoInterface.filmDao.filmHasProjections(film.getId()));
+			} else throw new Exception("Id not provided");
+			
 			request.getRequestDispatcher("/Success").forward(request, response);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.getRequestDispatcher("/Failure").forward(request, response);
 		}
+	}
+	@Override
+	protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("aaaaaaa");
 	}
 
 }

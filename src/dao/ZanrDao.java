@@ -17,12 +17,11 @@ public class ZanrDao implements DaoInterface {
 	public int add(Identifiable object) throws Exception {
 		Zanr zanr = (Zanr) object;
 		Connection connection = ConnectionManager.getConnection();
-		connection.setAutoCommit(false);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-
-			
+			connection.setAutoCommit(false);
+			connection.commit();
 			String query = "Select count(*) from zanr where lower(zanr.naziv) = lower(?)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, zanr.getNaziv());
@@ -30,7 +29,6 @@ public class ZanrDao implements DaoInterface {
 
 			if (resultSet.getInt(1) > 0) {
 				preparedStatement.close();
-				connection.rollback();
 
 			} else {
 				preparedStatement.close();
@@ -39,7 +37,7 @@ public class ZanrDao implements DaoInterface {
 				preparedStatement.setString(1, zanr.getNaziv());
 				preparedStatement.executeUpdate();
 
-				
+				connection.commit();
 			}
 			query = "select id from zanr where lower(zanr.naziv) = lower(?)";
 			preparedStatement = connection.prepareStatement(query);

@@ -195,6 +195,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			if(film.getReziser().getId() != 0) film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));
 			
 			query = "update film_slika set linkDoSlike = ? where film_id = ?";
+			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, film.getPathDoSlike());
 			preparedStatement.setInt(2, film.getId());
 			preparedStatement.executeUpdate();

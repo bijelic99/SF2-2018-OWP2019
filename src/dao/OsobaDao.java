@@ -27,7 +27,6 @@ public class OsobaDao implements DaoInterface {
 
 			if (resultSet.getInt(1) > 0) {
 				preparedStatement.close();
-				connection.rollback();
 
 			} else {
 				preparedStatement.close();
