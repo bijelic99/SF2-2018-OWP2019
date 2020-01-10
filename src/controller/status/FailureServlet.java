@@ -39,7 +39,7 @@ public class FailureServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ObjectMapper om = new ObjectMapper();
 		response.setContentType("application/json; charset=UTF-8");
-		response.setStatus(HttpServletResponse.SC_OK);
+		response.setStatus(request.getAttribute("error") != null ? (int) request.getAttribute("error") : HttpServletResponse.SC_OK);
 		Map<String,Boolean> successfull = new HashMap<String, Boolean>();
 		successfull.put("successful", false);
 		response.getWriter().write(om.writeValueAsString(successfull));

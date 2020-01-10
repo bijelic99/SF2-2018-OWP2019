@@ -5,8 +5,8 @@
     <filter-name>CORS</filter-name>
     <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
     <init-param>
-    	<param-name>cors.supportedMethods </param-name>
-    	<param-value>GET, POST, HEAD, PUT, DELETE, OPTIONS</param-value>
+      <param-name>cors.supportedMethods</param-name>
+      <param-value>GET, POST, HEAD, PUT, DELETE, OPTIONS</param-value>
     </init-param>
     <init-param>
       <param-name>cors.allowOrigin</param-name>
@@ -208,5 +208,14 @@
     <servlet-name>UnauthorizedServlet</servlet-name>
     <url-pattern>/Unauthorized</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <description></description>
+    <display-name>KorisnikServlet</display-name>
+    <servlet-name>KorisnikServlet</servlet-name>
+    <servlet-class>controller.korisnik.KorisnikServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KorisnikServlet</servlet-name>
+    <url-pattern>/Korisnik</url-pattern>
+  </servlet-mapping>
 </web-app>
