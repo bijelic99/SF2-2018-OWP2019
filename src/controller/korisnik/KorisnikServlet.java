@@ -18,6 +18,8 @@ import org.apache.catalina.util.DateTool;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DaoInterface;
+import miscellaneous.DataParsingHelper;
+import model.Film;
 import model.Identifiable;
 import model.Korisnik;
 
@@ -86,8 +88,8 @@ public class KorisnikServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setAttribute("error", HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		request.getRequestDispatcher("/Failure").forward(request, response);
 	}
 
 	/**
@@ -95,7 +97,17 @@ public class KorisnikServlet extends HttpServlet {
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		ObjectMapper om = new ObjectMapper();
+		try {
+			String jsonKorisnik = DataParsingHelper.getJsonFromBufferReader(request.getReader());
+			Korisnik korisnik = om.readerFor(Korisnik.class).readValue(jsonKorisnik);
+			DaoInterface.korisnikDao.update(korisnik);
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
 	}
 
 	/**
@@ -103,7 +115,21 @@ public class KorisnikServlet extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		try {
+			String strKorisnikId = request.getParameter("id");
+			if(strKorisnikId != null) {
+			int korisnikId = Integer.parseInt(strKorisnikId);
+			Korisnik korisnik = (Korisnik) DaoInterface.korisnikDao.get(korisnikId);
+			DaoInterface.korisnikDao.delete(korisnik, DaoInterface.korisnikDao.korisnikHasKarte(korisnikId));
+			} else throw new Exception("Id not provided");
+			
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("error", HttpServletResponse.SC_NOT_FOUND);
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
 	}
 
 }

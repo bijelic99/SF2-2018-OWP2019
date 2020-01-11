@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on Thu Dec 12 18:47:22 2019
+-- File generated with SQLiteStudio v3.2.1 on Sat Jan 11 18:56:03 2020
 --
 -- Text encoding used: System
 --
@@ -9,226 +9,34 @@ BEGIN TRANSACTION;
 -- Table: film
 DROP TABLE IF EXISTS film;
 CREATE TABLE film(id integer PRIMARY KEY AUTOINCREMENT, naziv varchar(64) not null, reziser_id integer, trajanje integer not null, distributer varchar(64) not null, zemlja_porekla varchar(64) not null, godina_proizvodnje int not null,  opis varchar(1024), obrisan boolean NOT NULL default false, CHECK(trajanje > 0), CHECK(godina_proizvodnje > 0), FOREIGN KEY (reziser_id) REFERENCES osoba(id));
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (1, 'Captain America: The First Avenger', 7, 818300, 'Dejan Productions', 'Bolivia', 1985, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (2, 'Iron Man', 9, 789100, 'Dejan Productions', 'Reunion', 2000, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (3, 'The Incredible Hulk', 7, 810800, 'Dejan Productions', 'Switzerland', 1971, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (4, 'Iron Man 2', 4, 1025900, 'Dejan Productions', 'Greece', 1945, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (5, 'Thor', 9, 1067000, 'Dejan Productions', 'El Salvador', 1954, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (6, 'The Avengers', 5, 626400, 'Dejan Productions', 'Liechtenstein', 1953, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (7, 'Iron Man 3', 17, 423900, 'Dejan Productions', 'Morocco', 1994, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (8, 'Thor: The Dark World', 1, 747300, 'Dejan Productions', 'Papua New Guinea', 1948, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (9, 'Captain America: The Winter Soldier', 3, 767900, 'Dejan Productions', 'Norway', 1991, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (10, 'Guardians of the Galaxy', 8, 922100, 'Dejan Productions', 'Pakistan', 1945, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (11, 'Guardians of the Galaxy Vol. 2', 3, 365900, 'Dejan Productions', 'Bolivia', 1991, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (12, 'Avengers: Age of Ultron', 4, 897700, 'Dejan Productions', 'Reunion', 1973, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (13, 'Ant-Man', 10, 890900, 'Dejan Productions', 'Switzerland', 1977, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (14, 'Captain America: Civil War', 8, 1064000, 'Dejan Productions', 'Greece', 1996, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (15, 'Spider-Man: Homecoming', 11, 715400, 'Dejan Productions', 'El Salvador', 1991, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (16, 'Doctor Strange', 5, 476600, 'Dejan Productions', 'Liechtenstein', 2011, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (17, 'Thor: Ragnarok', 13, 524100, 'Dejan Productions', 'Morocco', 1954, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (18, 'Black Panther', 10, 953200, 'Dejan Productions', 'Papua New Guinea', 1961, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (19, 'Avengers: Infinity War', 2, 964200, 'Dejan Productions', 'Norway', 1978, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
-INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (20, 'Ant-Man and the Wasp', 1, 746100, 'Dejan Productions', 'Pakistan', 1988, 'The quiet, Cornish town of London holds a secret.
-
-Cuthbert Pitt has the perfect life working as a housekeeper in the city and laughing with his sweet boyfriend, Tony Sparrow.
-
-However, when he finds a warped blade in his cellar, he begins to realise that things are not quite as they seem in the Pitt family.
-
-An engagement party leaves Cuthbert with some startling questions about his past, and he sets off to sunny London to find some answers.
-
-At first the people of London are gracious and popular. He is intrigued by the curiously helpful housekeeper, Phil Bogtrotter. However, after he introduces him to hard sugar, Cuthbert slowly finds himself drawn into a web of adultery, adultery and perhaps, even violence.
-
-Can Cuthbert resist the charms of Phil Bogtrotter and uncover the secret of the warped blade before it''s too late, or will his demise become yet another London legend?', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (1, 'Captain America: The First Avenger', 7, 8183, 'Dejan Productions', 'Bolivia', 1985, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (2, 'Iron Man', 9, 7891, 'Dejan Productions', 'Reunion', 2000, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (3, 'The Incredible Hulk', 7, 8108, 'Dejan Productions', 'Switzerland', 1971, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (4, 'Iron Man 2', 4, 10259, 'Dejan Productions', 'Greece', 1945, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (5, 'Thor', 9, 10670, 'Dejan Productions', 'El Salvador', 1954, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (6, 'The Avengers', 5, 6264, 'Dejan Productions', 'Liechtenstein', 1953, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (7, 'Iron Man 3', 17, 4239, 'Dejan Productions', 'Morocco', 1994, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (8, 'Thor: The Dark World', 1, 7473, 'Dejan Productions', 'Papua New Guinea', 1948, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (9, 'Captain America: The Winter Soldier', 3, 7679, 'Dejan Productions', 'Norway', 1991, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (10, 'Guardians of the Galaxy', 8, 9221, 'Dejan Productions', 'Pakistan', 1945, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (11, 'Guardians of the Galaxy Vol. 2', 3, 3659, 'Dejan Productions', 'Bolivia', 1991, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (12, 'Avengers: Age of Ultron', 4, 8977, 'Dejan Productions', 'Reunion', 1973, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (13, 'Ant-Man', 10, 8909, 'Dejan Productions', 'Switzerland', 1977, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (14, 'Captain America: Civil War', 8, 10640, 'Dejan Productions', 'Greece', 1996, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (15, 'Spider-Man: Homecoming', 11, 7154, 'Dejan Productions', 'El Salvador', 1991, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (16, 'Doctor Strange', 5, 4766, 'Dejan Productions', 'Liechtenstein', 2011, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (17, 'Thor: Ragnarok', 13, 5241, 'Dejan Productions', 'Morocco', 1954, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (18, 'Black Panther', 10, 9532, 'Dejan Productions', 'Papua New Guinea', 1961, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (19, 'Avengers: Infinity War', 2, 9642, 'Dejan Productions', 'Norway', 1978, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (20, 'Ant-Man and the Wasp', 1, 7461, 'Dejan Productions', 'Pakistan', 1988, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (21, 'testFilm4564', 76, 7200, 'DDDDD', 'dasdsa', 2019, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (22, 'testFilm', 76, 7260, 'dasdasd', '', 2019, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 1);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (24, 'Test', 2, 20000, '0sdaasd', 'dasasd', 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (25, 'dasdasddasadsads', 1, 3423, 'dsadsaads', 'dsadssadds', 23134, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (26, 'dasdasd', 80, 20000, 'dasadsadsda', 'dsadasd', 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (27, 'dasdasddsa', 81, 20000, 'dasdsad', 'asdasddsd', 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (28, 'TestFIlm22a2n', 84, 2000, 'Ja', 'Srbija', 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (30, 'Zikina Dinastija 1', 87, 20000, 'Jugoton', 'Jugoslavija', 1982, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
 
 -- Table: film_glumac
 DROP TABLE IF EXISTS film_glumac;
@@ -308,6 +116,49 @@ INSERT INTO film_glumac (film_id, glumac_id) VALUES (7, 72);
 INSERT INTO film_glumac (film_id, glumac_id) VALUES (1, 73);
 INSERT INTO film_glumac (film_id, glumac_id) VALUES (7, 74);
 INSERT INTO film_glumac (film_id, glumac_id) VALUES (11, 75);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (22, 76);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (22, 77);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (22, 4);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (22, 75);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (21, 78);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (21, 79);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (25, 1);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (27, 82);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (27, 83);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (28, 76);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (28, 86);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (30, 88);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (30, 89);
+
+-- Table: film_slika
+DROP TABLE IF EXISTS film_slika;
+CREATE TABLE film_slika (film_id integer PRIMARY KEY, linkDoSlike varchar (128) DEFAULT ('https://i.ibb.co/D7ymXLV/film-poster-placeholder.png'), FOREIGN KEY (film_id) REFERENCES film (id));
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (1, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (2, 'https://images-na.ssl-images-amazon.com/images/I/51eAcYiuFJL._SX425_.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (3, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (4, 'http://3.bp.blogspot.com/_nD_YgZuOadA/TImT2bkSbAI/AAAAAAAAAPs/CNbDBIZzGfw/s1600/robert-downey-jr-wallpapers_18919_1280x800.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (5, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (6, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (7, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (8, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (9, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (10, 'https://images-na.ssl-images-amazon.com/images/I/81b45f09rWL._SL1500_.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (11, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (12, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (13, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (14, 'https://images-na.ssl-images-amazon.com/images/I/51hiihvkzCL._SY445_.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (15, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (16, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (17, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (18, 'https://i.ibb.co/D7ymXLV/film-poster-placeholder.png');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (19, 'https://steemitimages.com/DQmNPLe8mXVSk3MimtwengocttcxRZ3BDJKMgVoZzPhki95/avengers-infinity-war-et00073462-02-04-2018-09-21-43.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (20, 'https://images-na.ssl-images-amazon.com/images/I/911Gc+MRR1L._RI_.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (24, '');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (25, '');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (26, '');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (27, '');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (28, 'https://cdn.pastemagazine.com/www/articles/2019/10/25/best-movies-redbox-2019.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (30, 'https://www.espreso.rs/data/images/2018/04/05/13/354923_zikina-dinastija_ls.jpg');
 
 -- Table: film_zanr
 DROP TABLE IF EXISTS film_zanr;
@@ -332,6 +183,21 @@ INSERT INTO film_zanr (film_id, zanr_id) VALUES (17, 4);
 INSERT INTO film_zanr (film_id, zanr_id) VALUES (18, 4);
 INSERT INTO film_zanr (film_id, zanr_id) VALUES (19, 4);
 INSERT INTO film_zanr (film_id, zanr_id) VALUES (20, 4);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (21, 3);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (22, 4);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (22, 3);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (22, 6);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (21, 7);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (22, 1);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (21, 2);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (21, 1);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (25, 2);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (25, 3);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (27, 8);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (28, 8);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (30, 4);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (21, 10);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (28, 11);
 
 -- Table: karta
 DROP TABLE IF EXISTS karta;
@@ -350,6 +216,12 @@ INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obri
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (8, 'dennisjackanapes', 'Username7', '2019-12-10', 1, 0);
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (9, 'ceiriogfavoring', 'Username9', '2019-12-10', 1, 0);
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (10, 'gopperswaals', 'Username7', '2019-12-10', 1, 0);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (11, 'test', '12345678', '2019-12-23', 2, 0);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (22, 'test2', 'test2', '2019-12-24', 2, 0);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (23, 'test3', 'dadasdddas', '2019-12-24', 1, 0);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (24, 'test23', 'adssaddsadsadsasda', '2019-12-24', 1, 1);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (25, 'sdasdasdasdsadasdasdasddgffassd', 'dddddddddddddddddddd', '2020-01-02', 1, 0);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (26, 'test1234', '56yuidfg', '2020-01-02', 1, 1);
 
 -- Table: osoba
 DROP TABLE IF EXISTS osoba;
@@ -429,6 +301,24 @@ INSERT INTO osoba (id, ime_prezime) VALUES (72, 'Jay-Jay Esquivel');
 INSERT INTO osoba (id, ime_prezime) VALUES (73, 'Ritchie Hess');
 INSERT INTO osoba (id, ime_prezime) VALUES (74, 'Victor Bull');
 INSERT INTO osoba (id, ime_prezime) VALUES (75, 'Jodie Mayer');
+INSERT INTO osoba (id, ime_prezime) VALUES (76, 'Test');
+INSERT INTO osoba (id, ime_prezime) VALUES (77, 'Dejan');
+INSERT INTO osoba (id, ime_prezime) VALUES (78, 'Mario');
+INSERT INTO osoba (id, ime_prezime) VALUES (79, 'Luigi');
+INSERT INTO osoba (id, ime_prezime) VALUES (80, '');
+INSERT INTO osoba (id, ime_prezime) VALUES (81, 'dasdad');
+INSERT INTO osoba (id, ime_prezime) VALUES (82, 'dasddasads');
+INSERT INTO osoba (id, ime_prezime) VALUES (83, 'sdads');
+INSERT INTO osoba (id, ime_prezime) VALUES (84, 'test2');
+INSERT INTO osoba (id, ime_prezime) VALUES (85, 'gll');
+INSERT INTO osoba (id, ime_prezime) VALUES (86, 'test23');
+INSERT INTO osoba (id, ime_prezime) VALUES (87, 'NisamSiguran');
+INSERT INTO osoba (id, ime_prezime) VALUES (88, 'Prijatelj#1');
+INSERT INTO osoba (id, ime_prezime) VALUES (89, 'Prijatelj#2');
+INSERT INTO osoba (id, ime_prezime) VALUES (90, 'ddasdTTTTTTTTT');
+INSERT INTO osoba (id, ime_prezime) VALUES (91, 'ddasdyyt');
+INSERT INTO osoba (id, ime_prezime) VALUES (92, 'dasdasgrty');
+INSERT INTO osoba (id, ime_prezime) VALUES (93, 'dasdasdasdasd');
 
 -- Table: projekcija
 DROP TABLE IF EXISTS projekcija;
@@ -751,6 +641,12 @@ INSERT INTO zanr (id, naziv) VALUES (2, 'Triler');
 INSERT INTO zanr (id, naziv) VALUES (3, 'Horor');
 INSERT INTO zanr (id, naziv) VALUES (4, 'Komedija');
 INSERT INTO zanr (id, naziv) VALUES (5, 'Akcija');
+INSERT INTO zanr (id, naziv) VALUES (6, 'Murder Mystery');
+INSERT INTO zanr (id, naziv) VALUES (7, 'tragikomedija');
+INSERT INTO zanr (id, naziv) VALUES (8, 'Crtani-Film');
+INSERT INTO zanr (id, naziv) VALUES (9, 'dTTTT');
+INSERT INTO zanr (id, naziv) VALUES (10, 'Crtani Fil');
+INSERT INTO zanr (id, naziv) VALUES (11, 'MojZanr');
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;

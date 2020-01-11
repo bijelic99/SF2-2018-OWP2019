@@ -234,5 +234,10 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		else delete(object);
 		return true;
 	}
+	
+	public boolean korisnikHasKarte(int korisnikId) {
+		//TODO kad se implementira KartaDao implementirati f-ju
+		return false;
+	}
 
 }
