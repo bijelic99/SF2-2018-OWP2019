@@ -3,8 +3,12 @@ package controller.film;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.StringJoiner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.DaoInterface;
 import miscellaneous.DataParsingHelper;
 import model.Film;
+import model.Identifiable;
 import model.KorisnikFromFrontend;
 import model.Uloga;
 
@@ -41,13 +46,37 @@ public class FilmServlet extends HttpServlet {
 		ObjectMapper om = new ObjectMapper();
 		try {
 			response.setContentType("application/json; utf-8");
-			String[] ids = null;
-			ids = request.getParameterValues("id");
+			Map<String, String[]> paramMap = request.getParameterMap();
+			if(paramMap.keySet().isEmpty()) {
+				ArrayList<Identifiable> filmovi = DaoInterface.filmDao.getAll();
+				response.getWriter().write(om.writeValueAsString(filmovi));
+				response.getWriter().close();
+			}
+			else if(paramMap.containsKey("id")) {
+			String[] ids = request.getParameterValues("id");
 			if(ids!= null) {
 				int id = Integer.parseInt(ids[0]);
 				Film film = (Film) DaoInterface.filmDao.get(id);
 				response.setStatus(HttpServletResponse.SC_OK);
 				response.getWriter().write(om.writeValueAsString(film));
+				response.getWriter().close();
+			}
+			}
+			else if (paramMap.containsKey("searchString")) {
+				final String searchString = paramMap.get("searchString")[0].trim();
+				ArrayList<Identifiable> list = DaoInterface.filmDao.get(f->{
+					if(!searchString.isEmpty()) {
+						Film film = (Film)f;
+						StringJoiner sj = new StringJoiner(" ");
+						sj.add(film.getNaziv()).add(film.getTrajanje()+"").add(film.getDistributer()).add(film.getZemljaPorekla()).add(film.getGodinaProizvodnje()+"").add(film.getReziser()+"");
+						film.getZanrovi().stream().forEach(z->sj.add(z.getNaziv()));
+						film.getGlumci().stream().forEach(o->sj.add(o.getNaziv()));
+						String filmString = sj.toString();
+						String[] searchArray = searchString.split(" ");
+						return Arrays.stream(searchArray).reduce(true, (value, element)-> value && filmString.toUpperCase().contains(element.toUpperCase()), (value1, value2)-> value1 && value2);
+					} else return true;
+				});
+				response.getWriter().write(om.writeValueAsString(list));
 				response.getWriter().close();
 			}
 		} catch (Exception e) {

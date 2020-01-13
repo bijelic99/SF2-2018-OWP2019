@@ -192,7 +192,7 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				korisnik.setId(resultSet.getInt(i++));
 				korisnik.setUsername(resultSet.getString(i++));
 				korisnik.setPassword(resultSet.getString(i++));
-				korisnik.setDatumRegistracije(new java.util.Date(resultSet.getLong(i++)));
+				korisnik.setDatumRegistracije(new java.util.Date(resultSet.getLong(i++)*1000));
 				korisnik.setUloga(Uloga.getById(resultSet.getInt(i++)));
 				korisnik.setObrisan(resultSet.getBoolean(i++));
 				korisnici.add(korisnik);

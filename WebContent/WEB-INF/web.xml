@@ -10,7 +10,7 @@
     </init-param>
     <init-param>
       <param-name>cors.allowOrigin</param-name>
-      <param-value>http://localhost:8080, http://192.168.1.250:8080</param-value>
+      <param-value>http://localhost:8080, http://192.168.1.250:8080, http://localhost:8081, http://192.168.1.250:8081</param-value>
     </init-param>
   </filter>
   <filter-mapping>
@@ -106,7 +106,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>RegisterServlet</servlet-name>
-    <url-pattern>/Register</url-pattern>
+    <url-pattern>/api/Register</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -136,7 +136,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>UniqueUsernameServlet</servlet-name>
-    <url-pattern>/UniqueUsername</url-pattern>
+    <url-pattern>/api/UniqueUsername</url-pattern>
   </servlet-mapping>
   <servlet>
     <description>Servlet za slanje vise filmova</description>
@@ -146,7 +146,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>FilmoviServlet</servlet-name>
-    <url-pattern>/Filmovi</url-pattern>
+    <url-pattern>/api/Filmovi</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -156,7 +156,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>FilmServlet</servlet-name>
-    <url-pattern>/Film</url-pattern>
+    <url-pattern>/api/Film</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -166,7 +166,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ZanroviServlet</servlet-name>
-    <url-pattern>/Zanrovi</url-pattern>
+    <url-pattern>/api/Zanrovi</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -176,7 +176,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>FilmskiRadniciServlet</servlet-name>
-    <url-pattern>/FilmskiRadnici</url-pattern>
+    <url-pattern>/api/FilmskiRadnici</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -186,7 +186,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/Login</url-pattern>
+    <url-pattern>/api/Login</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -196,7 +196,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/Logout</url-pattern>
+    <url-pattern>/api/Logout</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -216,6 +216,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>KorisnikServlet</servlet-name>
-    <url-pattern>/Korisnik</url-pattern>
+    <url-pattern>/api/Korisnik</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on Sat Jan 11 18:56:03 2020
+-- File generated with SQLiteStudio v3.2.1 on Mon Jan 13 21:40:46 2020
 --
 -- Text encoding used: System
 --
@@ -37,6 +37,7 @@ INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, 
 INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (27, 'dasdasddsa', 81, 20000, 'dasdsad', 'asdasddsd', 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
 INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (28, 'TestFIlm22a2n', 84, 2000, 'Ja', 'Srbija', 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
 INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (30, 'Zikina Dinastija 1', 87, 20000, 'Jugoton', 'Jugoslavija', 1982, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper fringilla congue. Donec ac laoreet sem, vitae tempor nunc. Donec vel lacinia diam. Aenean aliquet eros quis ante maximus, nec semper risus vehicula. Etiam a diam ac dolor malesuada sagittis. Etiam malesuada, turpis in convallis commodo, nunc nulla sagittis lectus, ut finibus sapien tellus eu ante. Morbi vitae nisi at arcu viverra ultricies sit amet non ligula. Nullam sit amet iaculis sem, eget efficitur erat. Morbi nulla magna, luctus ut ultricies sed, ornare ut leo. Phasellus semper, nunc eu fermentum pretium, nunc risus molestie metus, in vehicula mauris sem sed nibh.', 0);
+INSERT INTO film (id, naziv, reziser_id, trajanje, distributer, zemlja_porekla, godina_proizvodnje, opis, obrisan) VALUES (34, 'FFFF', 51, 200000, 'DDDDDDDDDDDDD', 'Srbija', 2020, 'hgggfhggghg', 0);
 
 -- Table: film_glumac
 DROP TABLE IF EXISTS film_glumac;
@@ -129,6 +130,10 @@ INSERT INTO film_glumac (film_id, glumac_id) VALUES (28, 76);
 INSERT INTO film_glumac (film_id, glumac_id) VALUES (28, 86);
 INSERT INTO film_glumac (film_id, glumac_id) VALUES (30, 88);
 INSERT INTO film_glumac (film_id, glumac_id) VALUES (30, 89);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (34, 2);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (34, 77);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (34, 79);
+INSERT INTO film_glumac (film_id, glumac_id) VALUES (34, 76);
 
 -- Table: film_slika
 DROP TABLE IF EXISTS film_slika;
@@ -159,6 +164,7 @@ INSERT INTO film_slika (film_id, linkDoSlike) VALUES (26, '');
 INSERT INTO film_slika (film_id, linkDoSlike) VALUES (27, '');
 INSERT INTO film_slika (film_id, linkDoSlike) VALUES (28, 'https://cdn.pastemagazine.com/www/articles/2019/10/25/best-movies-redbox-2019.jpg');
 INSERT INTO film_slika (film_id, linkDoSlike) VALUES (30, 'https://www.espreso.rs/data/images/2018/04/05/13/354923_zikina-dinastija_ls.jpg');
+INSERT INTO film_slika (film_id, linkDoSlike) VALUES (34, '');
 
 -- Table: film_zanr
 DROP TABLE IF EXISTS film_zanr;
@@ -198,6 +204,9 @@ INSERT INTO film_zanr (film_id, zanr_id) VALUES (28, 8);
 INSERT INTO film_zanr (film_id, zanr_id) VALUES (30, 4);
 INSERT INTO film_zanr (film_id, zanr_id) VALUES (21, 10);
 INSERT INTO film_zanr (film_id, zanr_id) VALUES (28, 11);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (34, 6);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (34, 4);
+INSERT INTO film_zanr (film_id, zanr_id) VALUES (34, 3);
 
 -- Table: karta
 DROP TABLE IF EXISTS karta;
@@ -205,7 +214,7 @@ CREATE TABLE karta(id integer PRIMARY KEY AUTOINCREMENT, projekcija_id int not n
 
 -- Table: korisnik
 DROP TABLE IF EXISTS korisnik;
-CREATE TABLE korisnik(id integer PRIMARY KEY AUTOINCREMENT, username varchar(64) UNIQUE not null, password varchar(64) not null, datum_registracije date not null default (date('now')), uloga_id integer not null DEFAULT 0, obrisan boolean not null DEFAULT false, FOREIGN KEY (uloga_id) REFERENCES uloga(id));
+CREATE TABLE korisnik (id integer PRIMARY KEY AUTOINCREMENT, username varchar (64) UNIQUE NOT NULL, password varchar (64) NOT NULL, datum_registracije DATETIME NOT NULL DEFAULT (datetime('now')), uloga_id integer NOT NULL DEFAULT 0, obrisan boolean NOT NULL DEFAULT false, FOREIGN KEY (uloga_id) REFERENCES uloga (id));
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (1, 'jollydorsal', 'Username8', '2019-12-10', 1, 0);
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (2, 'firechargeappetite', 'Username11', '2019-12-10', 1, 0);
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (3, 'chefgaffer', 'Username9', '2019-12-10', 1, 0);
@@ -222,6 +231,8 @@ INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obri
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (24, 'test23', 'adssaddsadsadsasda', '2019-12-24', 1, 1);
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (25, 'sdasdasdasdsadasdasdasddgffassd', 'dddddddddddddddddddd', '2020-01-02', 1, 0);
 INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (26, 'test1234', '56yuidfg', '2020-01-02', 1, 1);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (27, 'avavav', 'avavavav', '2020-01-13', 1, 0);
+INSERT INTO korisnik (id, username, password, datum_registracije, uloga_id, obrisan) VALUES (28, 'vavava', '12345678', '2020-01-13 19:43:12', 2, 0);
 
 -- Table: osoba
 DROP TABLE IF EXISTS osoba;

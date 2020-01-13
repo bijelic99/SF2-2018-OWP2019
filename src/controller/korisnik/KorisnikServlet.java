@@ -45,6 +45,7 @@ public class KorisnikServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			ObjectMapper om = new ObjectMapper();
+			response.setContentType("application/json; utf-8");
 			Map<String, String[]> paramMap = request.getParameterMap();
 			if (paramMap.keySet().isEmpty()) {
 				response.getWriter().write(om.writeValueAsString(DaoInterface.korisnikDao.getAll()));
@@ -57,11 +58,12 @@ public class KorisnikServlet extends HttpServlet {
 						Korisnik korisnik = (Korisnik)k;
 						String korisnikString = korisnik.getUsername() + " " + (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).format(korisnik.getDatumRegistracije()) + " " + korisnik.getUloga().toString();
 						String[] searchArray = searchString.split(" ");
-						return Arrays.stream(searchArray).reduce(true, (value, element)-> value && korisnikString.contains(element), (value1, value2)-> value1 && value2);
+						return Arrays.stream(searchArray).reduce(true, (value, element)-> value && korisnikString.toUpperCase().contains(element.toUpperCase()), (value1, value2)-> value1 && value2);
 					}
 					else return true;
 				});
 				response.getWriter().write(om.writeValueAsString(list));
+				response.getWriter().close();
 				
 				}
 			response.setStatus(HttpServletResponse.SC_OK);
