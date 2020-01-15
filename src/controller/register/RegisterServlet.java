@@ -43,6 +43,11 @@ public class RegisterServlet extends HttpServlet {
 			//System.out.println(korisnikJSON);
 			KorisnikFromFrontend korisnikShort = om.readerFor(KorisnikFromFrontend.class).readValue(korisnikJSON);
 			Korisnik korisnik = new Korisnik(korisnikShort);
+			if(!DaoInterface.korisnikDao.get(i -> {
+				Korisnik k = (Korisnik) i;
+				return k.getUsername().equals(korisnik.getUsername());
+			}).isEmpty()) throw new Exception();
+			if(korisnik.getPassword().length() < 8 ) throw new Exception();
 			DaoInterface.korisnikDao.add(korisnik);
 			request.getRequestDispatcher("/Success").forward(request, response);
 		} catch (Exception e) {

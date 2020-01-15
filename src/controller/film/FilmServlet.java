@@ -93,6 +93,8 @@ public class FilmServlet extends HttpServlet {
 			String jsonFilm = DataParsingHelper.getJsonFromBufferReader(request.getReader());
 			//System.out.println(jsonFilm);
 			Film film = om.readerFor(Film.class).readValue(jsonFilm);
+			if(film.getDistributer().isEmpty()) throw new Exception();
+			if(film.getZemljaPorekla().isEmpty()) throw new Exception();
 			int id = DaoInterface.filmDao.add(film);
 			request.setAttribute("id", id);
 			request.getRequestDispatcher("/Success").forward(request, response);
