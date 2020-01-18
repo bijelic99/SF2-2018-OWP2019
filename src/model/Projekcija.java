@@ -9,17 +9,20 @@ public class Projekcija extends Identifiable {
 	private Sala sala;
 	private Date datumVremePrikazivanja = new Date();
 	private double cenaKarte;
+	private Boolean obrisan;
+	
 	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date datumVremePrikazivanja,
-			double cenaKarte) {
+			double cenaKarte, boolean obrisan) {
 		super(id);
 		this.film = film;
 		this.tipProjekcije = tipProjekcije;
 		this.sala = sala;
 		this.datumVremePrikazivanja = datumVremePrikazivanja;
 		this.cenaKarte = cenaKarte;
+		this.obrisan = obrisan;
 	}
 	public Projekcija() {
-		this(0, new Film(), new TipProjekcije(), new Sala(), new Date(), 0.0);
+		this(0, new Film(), new TipProjekcije(), new Sala(), new Date(), 0.0, false);
 	}
 	public Film getFilm() {
 		return film;
@@ -50,6 +53,12 @@ public class Projekcija extends Identifiable {
 	}
 	public void setCenaKarte(double cenaKarte) {
 		this.cenaKarte = cenaKarte;
+	}
+	public Boolean getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(Boolean obrisan) {
+		this.obrisan = obrisan;
 	}
 	
 	
