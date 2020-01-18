@@ -1,16 +1,16 @@
 package model;
 
-public class Sediste {
+public class Sediste extends Identifiable {
 	private int redniBroj;
 	private Sala sala;
 	
-	public Sediste(int redniBroj, Sala sala) {
-		super();
+	public Sediste(int id, int redniBroj, Sala sala) {
+		super(id);
 		this.redniBroj = redniBroj;
 		this.sala = sala;
 	}
 	public Sediste() {
-		this(0, new Sala());
+		this(0, 0, new Sala());
 	}
 	public int getRedniBroj() {
 		return redniBroj;

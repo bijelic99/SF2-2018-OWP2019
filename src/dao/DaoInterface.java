@@ -21,5 +21,7 @@ public interface DaoInterface {
 	public static ProjekcijaDao projekcijaDao = new ProjekcijaDao();
 	public static TipProjekcijeDao tipProjekcijeDao = new TipProjekcijeDao();
 	public static SalaDao salaDao = new SalaDao();
+	public static SedisteDao sedisteDao = new SedisteDao();
+	public static KartaDao kartaDao = new KartaDao();
 	
 }

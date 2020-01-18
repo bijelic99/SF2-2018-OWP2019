@@ -14,7 +14,7 @@ public class Karta extends Identifiable {
 		this.datumVremeProdaje = datumVremeProdaje;
 		this.korisnik = korisnik;
 	}
-	public Karta(int id) {
+	public Karta() {
 		this(0,new Projekcija(), new Sediste(), new Date(), new Korisnik());
 	}
 	public Projekcija getProjekcija() {
