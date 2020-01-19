@@ -18,8 +18,57 @@ public class KartaDao implements DaoInterface {
 
 	@Override
 	public int add(Identifiable object) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		Karta karta = (Karta) object;
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		String query = "";
+
+		try {
+				connection.setAutoCommit(false);
+				connection.commit();
+				
+					int i =1;
+					query = "insert into karta(projekcija_id, sediste_id, korisnik_id) values(?, ?, ?)";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setInt(i++, karta.getProjekcija().getId());
+					preparedStatement.setInt(i++, karta.getSediste().getId());
+					preparedStatement.setInt(i++, karta.getKorisnik().getId());
+					preparedStatement.executeUpdate();
+					
+					if(karta.getProjekcija().getDatumVremePrikazivanja().before(new Date())) {
+						connection.rollback();
+						throw new Exception("Nije moguce rezervisati kartu za projekciju u proslosti");
+					}
+					if(DaoInterface.sedisteDao.getZauzetostSedistaForProjekcija(karta.getProjekcija().getId(), connection).stream().
+							filter(s->s.isZauzeto()).filter(s->s.getId() == karta.getSediste().getId()).count()>0) {
+						connection.rollback();
+						throw new Exception("Sediste je zauzeto");
+					}
+					
+					connection.commit();
+					preparedStatement.close();
+					
+					query = "select last_insert_rowid();";
+					preparedStatement = connection.prepareStatement(query);
+					karta.setId(preparedStatement.executeQuery().getInt(1));
+					
+				
+					
+				
+			
+		} finally {
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+		}
+		return karta.getId();
 	}
 
 	@Override

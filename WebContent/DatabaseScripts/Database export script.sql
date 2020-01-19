@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on Sat Jan 18 16:15:03 2020
+-- File generated with SQLiteStudio v3.2.1 on Sun Jan 19 19:12:09 2020
 --
 -- Text encoding used: System
 --
@@ -211,6 +211,7 @@ INSERT INTO film_zanr (film_id, zanr_id) VALUES (34, 3);
 -- Table: karta
 DROP TABLE IF EXISTS karta;
 CREATE TABLE karta (id integer PRIMARY KEY AUTOINCREMENT, projekcija_id int NOT NULL, sediste_id int NOT NULL, korisnik_id int NOT NULL, datum_vreme_prodaje datetime NOT NULL DEFAULT (datetime('now')), obrisan boolean NOT NULL DEFAULT false, FOREIGN KEY (projekcija_id) REFERENCES projekcija (id), FOREIGN KEY (korisnik_id) REFERENCES korisnik (id), FOREIGN KEY (sediste_id) REFERENCES sediste (id));
+INSERT INTO karta (id, projekcija_id, sediste_id, korisnik_id, datum_vreme_prodaje, obrisan) VALUES (1, 1, 3, 1, '2020-01-19 15:42:34', 0);
 
 -- Table: korisnik
 DROP TABLE IF EXISTS korisnik;
@@ -333,7 +334,8 @@ INSERT INTO osoba (id, ime_prezime) VALUES (93, 'dasdasdasdasd');
 
 -- Table: projekcija
 DROP TABLE IF EXISTS projekcija;
-CREATE TABLE projekcija (id integer PRIMARY KEY AUTOINCREMENT, film_id int NOT NULL, tip_projekcije_id int NOT NULL, sala_id int NOT NULL, datum_vreme_projekcije datetime NOT NULL, cena_karte DOUBLE NOT NULL, obrisan boolean NOT NULL DEFAULT false, CHECK (cena_karte > 0), FOREIGN KEY (film_id) REFERENCES film (id), FOREIGN KEY (tip_projekcije_id) REFERENCES tip_projekcije (id), FOREIGN KEY (sala_id) REFERENCES sala (id));
+CREATE TABLE projekcija (id integer PRIMARY KEY AUTOINCREMENT, film_id int NOT NULL, tip_projekcije_id int NOT NULL, sala_id int NOT NULL, datum_vreme_projekcije datetime NOT NULL DEFAULT (datetime('now')), cena_karte DOUBLE NOT NULL, obrisan boolean NOT NULL DEFAULT false, CHECK (cena_karte > 0), FOREIGN KEY (film_id) REFERENCES film (id), FOREIGN KEY (tip_projekcije_id) REFERENCES tip_projekcije (id), FOREIGN KEY (sala_id) REFERENCES sala (id));
+INSERT INTO projekcija (id, film_id, tip_projekcije_id, sala_id, datum_vreme_projekcije, cena_karte, obrisan) VALUES (1, 1, 0, 1, '2020-01-19 15:41:57', 20.0, 0);
 
 -- Table: projekcija_administrator
 DROP TABLE IF EXISTS projekcija_administrator;

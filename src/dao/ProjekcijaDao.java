@@ -25,6 +25,11 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 		String query = "";
 
 		try {
+			connection.setAutoCommit(false);
+			connection.commit();
+			
+			
+			
 			query = "insert into projekcija(film_id, tip_projekcije_id, sala_id, datum_vreme_projekcije, cene_karte) values(?, ?, ?, ?)";
 			int i = 1;
 			preparedStatement = connection.prepareStatement(query);
@@ -33,8 +38,25 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 			preparedStatement.setInt(i++, projekcija.getSala().getId());
 			preparedStatement.setDate(i++, new java.sql.Date(projekcija.getDatumVremePrikazivanja().getTime()));
 			preparedStatement.setDouble(i++, projekcija.getCenaKarte());
-
 			preparedStatement.executeUpdate();
+			
+			if(!projekcija.getSala().getPodrzaniTipoviProjekcija().contains(projekcija.getTipProjekcije())) {
+				connection.rollback();
+				throw new Exception("Sala ne podrzava taj tip projekcije");
+			}
+			if(projekcija.getDatumVremePrikazivanja().before(new Date())) {
+				connection.rollback();
+				throw new Exception("Nije moguce rezervisati salu u proslosti");
+			}
+			if(!DaoInterface.salaDao.checkIfSalaIsFree(projekcija.getSala().getId(), 
+					projekcija.getDatumVremePrikazivanja(), 
+					new Date(projekcija.getDatumVremePrikazivanja().getTime() + projekcija.getFilm().getTrajanje()*1000), 
+					connection)){
+				connection.rollback();
+				throw new Exception("Nije moguce rezervisati termin, sala nije slobodna");
+			}
+			
+			connection.commit();
 			preparedStatement.close();
 
 			query = "select last_insert_rowid();";
@@ -67,6 +89,9 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 		String query = "";
 
 		try {
+			connection.setAutoCommit(false);
+			connection.commit();
+			
 			query = "update projekcija set film_id = ?, tip_projekcije_id = ?, sala_id = ?, datum_vreme_projekcije = ?, cene_karte = ?, obrisan = ?";
 			int i = 1;
 			preparedStatement = connection.prepareStatement(query);
@@ -76,8 +101,26 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 			preparedStatement.setDate(i++, new java.sql.Date(projekcija.getDatumVremePrikazivanja().getTime()));
 			preparedStatement.setDouble(i++, projekcija.getCenaKarte());
 			preparedStatement.setBoolean(i++, projekcija.getObrisan());
-
 			preparedStatement.executeUpdate();
+			
+			if(!projekcija.getSala().getPodrzaniTipoviProjekcija().contains(projekcija.getTipProjekcije())) {
+				connection.rollback();
+				throw new Exception("Sala ne podrzava taj tip projekcije");
+			}
+			if(projekcija.getDatumVremePrikazivanja().before(new Date())) {
+				connection.rollback();
+				throw new Exception("Nije moguce rezervisati salu u proslosti");
+			}
+			if(!DaoInterface.salaDao.checkIfSalaIsFree(projekcija.getSala().getId(), projekcija.getId(), 
+					projekcija.getDatumVremePrikazivanja(), 
+					new Date(projekcija.getDatumVremePrikazivanja().getTime() + projekcija.getFilm().getTrajanje()*1000), 
+					connection)){
+				connection.rollback();
+				throw new Exception("Nije moguce rezervisati termin, sala nije slobodna");
+			}
+			
+			connection.commit();
+			preparedStatement.close();
 
 			return true;
 

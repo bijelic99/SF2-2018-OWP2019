@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import model.Identifiable;
 import model.Sala;
-import model.Zanr;
 
 public class SalaDao implements DaoInterface {
 
@@ -125,6 +125,67 @@ public class SalaDao implements DaoInterface {
 
 		}
 		return sale;
+	}
+	
+	public boolean checkIfSalaIsFree(int salaId, Date startDate, Date endDate, Connection connection) throws Exception{
+		PreparedStatement preparedStatement = null;
+		String query = "";
+		try {
+			//treba testirati
+			query = "select sala.id from projekcija join sala on projekcija.id = sala.id "
+					+ "join film on film.id = projekcija.film_id "
+					+ "where sala.id = ? and projekcija.datum_vreme_projekcije <= ? "
+					+ "and (DATETIME(projekcija.datum_vreme_projekcije, ('+' || film.trajanje || ' seconds'))) >= ?";
+			preparedStatement = connection.prepareStatement(query);
+			int i = 1;
+			preparedStatement.setInt(i++, salaId);
+			preparedStatement.setDate(i++, new java.sql.Date(startDate.getTime()));
+			preparedStatement.setDate(i++, new java.sql.Date(endDate.getTime()));
+			
+			return !preparedStatement.executeQuery().next();
+
+		} catch (Exception e) {
+
+			throw e;
+		} finally {
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+
+		}
+	}
+	
+	public boolean checkIfSalaIsFree(int salaId, int projekcijaId, Date startDate, Date endDate, Connection connection) throws Exception{
+		PreparedStatement preparedStatement = null;
+		String query = "";
+		try {
+			//treba testirati
+			query = "select sala.id from projekcija join sala on projekcija.id = sala.id "
+					+ "join film on film.id = projekcija.film_id "
+					+ "where projekcija.id != ?, sala.id = ? and projekcija.datum_vreme_projekcije <= ? "
+					+ "and (DATETIME(projekcija.datum_vreme_projekcije, ('+' || film.trajanje || ' seconds'))) >= ?";
+			preparedStatement = connection.prepareStatement(query);
+			int i = 1;
+			preparedStatement.setInt(i++, projekcijaId);
+			preparedStatement.setInt(i++, salaId);
+			preparedStatement.setDate(i++, new java.sql.Date(startDate.getTime()));
+			preparedStatement.setDate(i++, new java.sql.Date(endDate.getTime()));
+			
+			return !preparedStatement.executeQuery().next();
+
+		} catch (Exception e) {
+
+			throw e;
+		} finally {
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+
+		}
 	}
 
 }

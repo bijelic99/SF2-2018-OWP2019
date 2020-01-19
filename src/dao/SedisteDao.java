@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import org.eclipse.jdt.internal.compiler.parser.TerminalTokens;
+
 import model.Identifiable;
 import model.Sala;
 import model.Sediste;
@@ -55,10 +57,56 @@ public class SedisteDao implements DaoInterface {
 		return sedista;
 	}
 	
-	public ArrayList<ZauzetoSediste> getZauzetostSedistaForSala(Sala sala, int terminId){
-		return null;
-	}
+	public ArrayList<ZauzetoSediste> getZauzetostSedistaForProjekcija(int projekcijaId, Connection connection) throws Exception {
+		ArrayList<ZauzetoSediste> sedista = new ArrayList<ZauzetoSediste>();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+		
+		try {
+			query = "select id, sala_id, redni_broj, (case when karta.id is not null then 1 else 0 end ) as zauzeto "
+					+ "from sediste "
+					+ "left join karta on karta.sediste_id = sediste.id "
+					+ "left join projekcija on projekcija.id = karta.projekcija_id "
+					+ "where projekcija.id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, projekcijaId);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				int i = 1;
+				ZauzetoSediste sediste = new ZauzetoSediste();
+				sediste.setId(resultSet.getInt(i++));
+				sediste.setSala((Sala) DaoInterface.salaDao.get(resultSet.getInt(i++)));
+				sediste.setRedniBroj(resultSet.getInt(i++));
+				sediste.setZauzeto(resultSet.getBoolean(i++));
+				sedista.add(sediste);
+			}
 
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+		}
+		
+		return sedista;
+	}
+	
+	public ArrayList<ZauzetoSediste> getZauzetostSedistaForProjekcija(int projekcijaId) throws Exception {
+		Connection connection = ConnectionManager.getConnection();
+		try {
+			return getZauzetostSedistaForProjekcija(projekcijaId, connection);
+		} finally {
+			connection.close();
+		}
+	}
+	
 	@Override
 	public int add(Identifiable object) throws Exception {
 		// TODO Auto-generated method stub
