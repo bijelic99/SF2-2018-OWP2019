@@ -14,6 +14,7 @@ import model.Identifiable;
 import model.Projekcija;
 import model.Sala;
 import model.TipProjekcije;
+import model.Karta;
 
 public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
@@ -270,6 +271,10 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 			return update(p);
 		}
 		else return delete(object);
+	}
+	
+	public boolean projekcijaHasKarte(int projekcijaId) throws Exception {
+		return DaoInterface.kartaDao.get(k->((Karta)k).getProjekcija().getId() == projekcijaId).isEmpty();
 	}
 
 }

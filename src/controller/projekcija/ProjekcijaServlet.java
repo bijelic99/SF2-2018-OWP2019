@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DaoInterface;
+import miscellaneous.DataParsingHelper;
 import model.Film;
 import model.Identifiable;
 import model.Projekcija;
@@ -61,59 +62,46 @@ public class ProjekcijaServlet extends HttpServlet {
 				}
 			} else if (paramMap.containsKey("searchString")) {
 				final String searchString = paramMap.get("searchString")[0].trim();
-				ArrayList<Identifiable> list = DaoInterface.projekcijaDao
-						.get(p -> /*
-									 * { if(!searchString.isEmpty()) { Film film = (Film)f; StringJoiner sj = new
-									 * StringJoiner(" ");
-									 * sj.add(film.getNaziv()).add(film.getTrajanje()+"").add(film.getDistributer())
-									 * .add(film.getZemljaPorekla()).add(film.getGodinaProizvodnje()+"").add(film.
-									 * getReziser()+"");
-									 * film.getZanrovi().stream().forEach(z->sj.add(z.getNaziv()));
-									 * film.getGlumci().stream().forEach(o->sj.add(o.getNaziv())); String filmString
-									 * = sj.toString(); String[] searchArray = searchString.split(" "); return
-									 * Arrays.stream(searchArray).reduce(true, (value, element)-> value &&
-									 * filmString.toUpperCase().contains(element.toUpperCase()), (value1, value2)->
-									 * value1 && value2); } else return true; }
-									 */ {
-							if (!searchString.isEmpty()) {
-								SimpleDateFormat sdf = new SimpleDateFormat("hh:mm dd-MM-yyyy");
-								Projekcija projekcija = (Projekcija) p;
-								StringJoiner sj = new StringJoiner(" ");
-								sj.add(projekcija.getId() + "").add(projekcija.getFilm().getNaziv())
-										.add(projekcija.getTipProjekcije().getNaziv())
-										.add(projekcija.getSala().getNaziv())
-										.add(sdf.format(projekcija.getDatumVremePrikazivanja()))
-										.add(projekcija.getCenaKarte() + "");
-								String projekcijaString = sj.toString();
-								String[] searchArray = searchString.split(" ");
-								return Arrays.stream(searchArray).reduce(true, (value, element)-> {
-									if(element.matches(	"^\\[\\d{2}/\\d{2}/\\d{4} [0-5]{1,2}:[0-5]{1,2} \\- \\d{2}/\\d{2}/\\d{4} [0-5]{1,2}:[0-5]{1,2}\\]$")) {
-										String[] strDates = element.replace("[", "").replace("]","").trim().split(" ");
-										SimpleDateFormat sdfd = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-										try {
-											Date pocetak = sdfd.parse(strDates[0].trim());
-											Date kraj = sdfd.parse(strDates[1].trim());
-											return value && (pocetak.before(projekcija.getDatumVremePrikazivanja()) && kraj.after(projekcija.getDatumVremePrikazivanja()));
-										} catch (ParseException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-											return false;
-										}
-										
-										
-									}
-									else return value && (projekcijaString.toLowerCase().contains(element.toLowerCase()));
-								}, (value1, value2)-> value1 && value2);
-								
+				ArrayList<Identifiable> list = DaoInterface.projekcijaDao.get(p -> {
+					if (!searchString.isEmpty()) {
+						SimpleDateFormat sdf = new SimpleDateFormat("hh:mm dd-MM-yyyy");
+						Projekcija projekcija = (Projekcija) p;
+						StringJoiner sj = new StringJoiner(" ");
+						sj.add(projekcija.getId() + "").add(projekcija.getFilm().getNaziv())
+								.add(projekcija.getTipProjekcije().getNaziv()).add(projekcija.getSala().getNaziv())
+								.add(sdf.format(projekcija.getDatumVremePrikazivanja()))
+								.add(projekcija.getCenaKarte() + "");
+						String projekcijaString = sj.toString();
+						String[] searchArray = searchString.split(" ");
+						return Arrays.stream(searchArray).reduce(true, (value, element) -> {
+							if (element.matches(
+									"^\\[\\d{2}/\\d{2}/\\d{4} [0-5]{1,2}:[0-5]{1,2} \\- \\d{2}/\\d{2}/\\d{4} [0-5]{1,2}:[0-5]{1,2}\\]$")) {
+								String[] strDates = element.replace("[", "").replace("]", "").trim().split(" ");
+								SimpleDateFormat sdfd = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+								try {
+									Date pocetak = sdfd.parse(strDates[0].trim());
+									Date kraj = sdfd.parse(strDates[1].trim());
+									return value && (pocetak.before(projekcija.getDatumVremePrikazivanja())
+											&& kraj.after(projekcija.getDatumVremePrikazivanja()));
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+									return false;
+								}
+
 							} else
-								return true;
-						});
-				 
-				 
+								return value && (projekcijaString.toLowerCase().contains(element.toLowerCase()));
+						}, (value1, value2) -> value1 && value2);
+
+					} else
+						return true;
+				});
+
 				response.getWriter().write(om.writeValueAsString(list));
 				response.getWriter().close();
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
@@ -124,8 +112,17 @@ public class ProjekcijaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		ObjectMapper om = new ObjectMapper();
+		try {
+			String jsonProjekcija = DataParsingHelper.getJsonFromBufferReader(request.getReader());
+			Projekcija projekcija= om.readerFor(Projekcija.class).readValue(jsonProjekcija);
+			int id = DaoInterface.projekcijaDao.add(projekcija);
+			request.setAttribute("id", id);
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
 	}
 
 	/**
@@ -133,7 +130,16 @@ public class ProjekcijaServlet extends HttpServlet {
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		ObjectMapper om = new ObjectMapper();
+		try {
+			String jsonProjekcija = DataParsingHelper.getJsonFromBufferReader(request.getReader());
+			Projekcija projekcija= om.readerFor(Projekcija.class).readValue(jsonProjekcija);
+			DaoInterface.projekcijaDao.update(projekcija);
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
 	}
 
 	/**
@@ -141,7 +147,20 @@ public class ProjekcijaServlet extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		try {
+			String strProjekcijaId = request.getParameter("id");
+			if(strProjekcijaId != null) {
+			int projekcijaId = Integer.parseInt(strProjekcijaId);
+			Projekcija projekcija = (Projekcija) DaoInterface.projekcijaDao.get(projekcijaId);
+			DaoInterface.projekcijaDao.delete(projekcija, DaoInterface.projekcijaDao.projekcijaHasKarte(projekcija.getId()));
+			} else throw new Exception("Id not provided");
+			
+			request.getRequestDispatcher("/Success").forward(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.getRequestDispatcher("/Failure").forward(request, response);
+		}
 	}
 
 }

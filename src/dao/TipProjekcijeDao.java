@@ -40,8 +40,8 @@ public class TipProjekcijeDao implements DaoInterface {
 		String query = "";
 		try {
 			query = "select id, naziv from tip_projekcije where id = ?";
-			preparedStatement.setInt(1, id);
 			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				tipProjekcije = new TipProjekcije();

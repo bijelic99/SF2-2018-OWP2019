@@ -140,10 +140,5 @@ public class FilmServlet extends HttpServlet {
 			request.getRequestDispatcher("/Failure").forward(request, response);
 		}
 	}
-	@Override
-	protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("aaaaaaa");
-	}
 
 }
