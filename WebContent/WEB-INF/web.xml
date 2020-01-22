@@ -218,4 +218,14 @@
     <servlet-name>KorisnikServlet</servlet-name>
     <url-pattern>/api/Korisnik</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProjekcijaServlet</display-name>
+    <servlet-name>ProjekcijaServlet</servlet-name>
+    <servlet-class>controller.projekcija.ProjekcijaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProjekcijaServlet</servlet-name>
+    <url-pattern>/api/Projekcija</url-pattern>
+  </servlet-mapping>
 </web-app>

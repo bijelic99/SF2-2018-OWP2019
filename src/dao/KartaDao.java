@@ -24,38 +24,35 @@ public class KartaDao implements DaoInterface {
 		String query = "";
 
 		try {
-				connection.setAutoCommit(false);
-				connection.commit();
-				
-					int i =1;
-					query = "insert into karta(projekcija_id, sediste_id, korisnik_id) values(?, ?, ?)";
-					preparedStatement = connection.prepareStatement(query);
-					preparedStatement.setInt(i++, karta.getProjekcija().getId());
-					preparedStatement.setInt(i++, karta.getSediste().getId());
-					preparedStatement.setInt(i++, karta.getKorisnik().getId());
-					preparedStatement.executeUpdate();
-					
-					if(karta.getProjekcija().getDatumVremePrikazivanja().before(new Date())) {
-						connection.rollback();
-						throw new Exception("Nije moguce rezervisati kartu za projekciju u proslosti");
-					}
-					if(DaoInterface.sedisteDao.getZauzetostSedistaForProjekcija(karta.getProjekcija().getId(), connection).stream().
-							filter(s->s.isZauzeto()).filter(s->s.getId() == karta.getSediste().getId()).count()>0) {
-						connection.rollback();
-						throw new Exception("Sediste je zauzeto");
-					}
-					
-					connection.commit();
-					preparedStatement.close();
-					
-					query = "select last_insert_rowid();";
-					preparedStatement = connection.prepareStatement(query);
-					karta.setId(preparedStatement.executeQuery().getInt(1));
-					
-				
-					
-				
-			
+			connection.setAutoCommit(false);
+			connection.commit();
+
+			int i = 1;
+			query = "insert into karta(projekcija_id, sediste_id, korisnik_id) values(?, ?, ?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(i++, karta.getProjekcija().getId());
+			preparedStatement.setInt(i++, karta.getSediste().getId());
+			preparedStatement.setInt(i++, karta.getKorisnik().getId());
+			preparedStatement.executeUpdate();
+
+			if (karta.getProjekcija().getDatumVremePrikazivanja().before(new Date())) {
+				connection.rollback();
+				throw new Exception("Nije moguce rezervisati kartu za projekciju u proslosti");
+			}
+			if (DaoInterface.sedisteDao.getZauzetostSedistaForProjekcija(karta.getProjekcija().getId(), connection)
+					.stream().filter(s -> s.isZauzeto()).filter(s -> s.getId() == karta.getSediste().getId())
+					.count() > 0) {
+				connection.rollback();
+				throw new Exception("Sediste je zauzeto");
+			}
+
+			connection.commit();
+			preparedStatement.close();
+
+			query = "select last_insert_rowid();";
+			preparedStatement = connection.prepareStatement(query);
+			karta.setId(preparedStatement.executeQuery().getInt(1));
+
 		} finally {
 			try {
 				preparedStatement.close();
@@ -73,14 +70,40 @@ public class KartaDao implements DaoInterface {
 
 	@Override
 	public boolean update(Identifiable object) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		throw new Exception("Update not Implemented");
 	}
 
 	@Override
 	public boolean delete(Identifiable object) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		String query = "";
+
+		try {
+			connection.setAutoCommit(false);
+			connection.commit();
+			
+			query = "delete from karta where id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, object.getId());
+			preparedStatement.executeUpdate();
+			
+			connection.commit();
+			return true;
+
+		} finally {
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+		}
+		
 	}
 
 	@Override
@@ -96,16 +119,15 @@ public class KartaDao implements DaoInterface {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			if(resultSet.next()) {
+			if (resultSet.next()) {
 				int i = 1;
 				karta = new Karta();
 				karta.setId(resultSet.getInt(i++));
 				karta.setProjekcija((Projekcija) DaoInterface.projekcijaDao.get(resultSet.getInt(i++)));
 				karta.setSediste((Sediste) DaoInterface.sedisteDao.get(resultSet.getInt(i++)));
 				karta.setKorisnik((Korisnik) DaoInterface.korisnikDao.get(resultSet.getInt(i++)));
-				karta.setDatumVremeProdaje(new Date(resultSet.getLong(i++)*1000));
-				
-				
+				karta.setDatumVremeProdaje(new Date(resultSet.getLong(i++) * 1000));
+
 			}
 		} finally {
 			try {
@@ -152,8 +174,8 @@ public class KartaDao implements DaoInterface {
 				karta.setProjekcija((Projekcija) DaoInterface.projekcijaDao.get(resultSet.getInt(i++)));
 				karta.setSediste((Sediste) DaoInterface.sedisteDao.get(resultSet.getInt(i++)));
 				karta.setKorisnik((Korisnik) DaoInterface.korisnikDao.get(resultSet.getInt(i++)));
-				karta.setDatumVremeProdaje(new Date(resultSet.getLong(i++)*1000));
-				
+				karta.setDatumVremeProdaje(new Date(resultSet.getLong(i++) * 1000));
+
 				karte.add(karta);
 			}
 		} finally {

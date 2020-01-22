@@ -109,7 +109,7 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 			}
 			if(projekcija.getDatumVremePrikazivanja().before(new Date())) {
 				connection.rollback();
-				throw new Exception("Nije moguce rezervisati salu u proslosti");
+				throw new Exception("Nije moguce rezervisati termin u proslosti");
 			}
 			if(!DaoInterface.salaDao.checkIfSalaIsFree(projekcija.getSala().getId(), projekcija.getId(), 
 					projekcija.getDatumVremePrikazivanja(), 
