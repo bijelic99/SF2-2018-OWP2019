@@ -228,4 +228,14 @@
     <servlet-name>ProjekcijaServlet</servlet-name>
     <url-pattern>/api/Projekcija</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ZauzetaSedistaZaProjekcijuServlet</display-name>
+    <servlet-name>ZauzetaSedistaZaProjekcijuServlet</servlet-name>
+    <servlet-class>controller.projekcija.ZauzetaSedistaZaProjekcijuServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ZauzetaSedistaZaProjekcijuServlet</servlet-name>
+    <url-pattern>/api/ZauzetaSedistaZaProjekciju</url-pattern>
+  </servlet-mapping>
 </web-app>

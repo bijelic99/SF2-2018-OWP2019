@@ -30,8 +30,8 @@ public class FailureServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Error: <br>");
-		String error = request.getAttribute("error").toString();
-		response.getWriter().append(error);
+		Object error = request.getAttribute("error");
+		response.getWriter().append(error != null ? error.toString() : "");
 		response.getWriter().close();
 		response.setStatus(200);
 	}

@@ -64,11 +64,12 @@ public class SedisteDao implements DaoInterface {
 		String query = "";
 		
 		try {
-			query = "select id, sala_id, redni_broj, (case when karta.id is not null then 1 else 0 end ) as zauzeto "
-					+ "from sediste "
-					+ "left join karta on karta.sediste_id = sediste.id "
-					+ "left join projekcija on projekcija.id = karta.projekcija_id "
-					+ "where projekcija.id = ?";
+			query = "select sediste.id, sediste.sala_id, sediste.redni_broj, (case when karta.id is not null then 1 else 0 end ) as zauzeto" + 
+					" from sediste" + 
+					" join  sala on sala.id = sediste.sala_id" + 
+					" left join karta on karta.sediste_id = sediste.id" + 
+					" left join projekcija on projekcija.sala_id = sala.id" + 
+					" where projekcija.id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, projekcijaId);
 			resultSet = preparedStatement.executeQuery();
