@@ -2,8 +2,9 @@ package model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 public class Projekcija extends Identifiable {
-	
 	private Film film;
 	private TipProjekcije tipProjekcije;
 	private Sala sala;

@@ -61,6 +61,7 @@ public class ProjekcijaServlet extends HttpServlet {
 					response.getWriter().close();
 				}
 			} else if (paramMap.containsKey("searchString")) {
+				//Odraditi ponovo
 				final String searchString = paramMap.get("searchString")[0].trim();
 				ArrayList<Identifiable> list = DaoInterface.projekcijaDao.get(p -> {
 					if (!searchString.isEmpty()) {

@@ -34,18 +34,18 @@ public class KartaDao implements DaoInterface {
 			preparedStatement.setInt(i++, karta.getSediste().getId());
 			preparedStatement.setInt(i++, karta.getKorisnik().getId());
 			preparedStatement.executeUpdate();
-
 			if (karta.getProjekcija().getDatumVremePrikazivanja().before(new Date())) {
 				connection.rollback();
 				throw new Exception("Nije moguce rezervisati kartu za projekciju u proslosti");
 			}
-			if (DaoInterface.sedisteDao.getZauzetostSedistaForProjekcija(karta.getProjekcija().getId(), connection)
+			if (DaoInterface.sedisteDao.getZauzetostSedistaForProjekcija(karta.getProjekcija().getId())
 					.stream().filter(s -> s.isZauzeto()).filter(s -> s.getId() == karta.getSediste().getId())
 					.count() > 0) {
 				connection.rollback();
 				throw new Exception("Sediste je zauzeto");
 			}
 
+			
 			connection.commit();
 			preparedStatement.close();
 

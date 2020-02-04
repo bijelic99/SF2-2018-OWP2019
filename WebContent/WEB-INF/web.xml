@@ -238,4 +238,14 @@
     <servlet-name>ZauzetaSedistaZaProjekcijuServlet</servlet-name>
     <url-pattern>/api/ZauzetaSedistaZaProjekciju</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>KartaServlet</display-name>
+    <servlet-name>KartaServlet</servlet-name>
+    <servlet-class>controller.karta.KartaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KartaServlet</servlet-name>
+    <url-pattern>/api/Karta</url-pattern>
+  </servlet-mapping>
 </web-app>

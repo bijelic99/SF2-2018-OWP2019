@@ -1,6 +1,7 @@
 package controller.status;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,9 +41,15 @@ public class FailureServlet extends HttpServlet {
 		ObjectMapper om = new ObjectMapper();
 		response.setContentType("application/json; charset=UTF-8");
 		response.setStatus(request.getAttribute("error") != null ? (int) request.getAttribute("error") : HttpServletResponse.SC_OK);
-		Map<String,Boolean> successfull = new HashMap<String, Boolean>();
-		successfull.put("successful", false);
-		response.getWriter().write(om.writeValueAsString(successfull));
+		response.sendError(request.getAttribute("error") != null ? (int) request.getAttribute("error") : HttpServletResponse.SC_OK, request.getAttribute("error-message") != null ? request.getAttribute("error-message").toString() : "");
+		Map<String, Object> returnData = new HashMap<String, Object>();
+		returnData.put("successful", false);
+		Enumeration enumeration = request.getAttributeNames();
+		while(enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement().toString();
+			returnData.put(key, request.getAttribute(key));
+		}
+		response.getWriter().write(om.writeValueAsString(returnData));
 		response.getWriter().close();
 	}
 
