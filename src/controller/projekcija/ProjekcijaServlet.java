@@ -122,6 +122,7 @@ public class ProjekcijaServlet extends HttpServlet {
 			request.getRequestDispatcher("/Success").forward(request, response);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.getRequestDispatcher("/Failure").forward(request, response);
 		}
 	}

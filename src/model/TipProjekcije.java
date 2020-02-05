@@ -12,6 +12,12 @@ public class TipProjekcije extends NamedIdentifiable {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		return ((TipProjekcije) arg0).getId() == this.getId();
+	}
+
 	
 
 }

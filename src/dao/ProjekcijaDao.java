@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.function.Predicate;
@@ -31,13 +33,14 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 			
 			
 			
-			query = "insert into projekcija(film_id, tip_projekcije_id, sala_id, datum_vreme_projekcije, cene_karte) values(?, ?, ?, ?)";
+			query = "insert into projekcija(film_id, tip_projekcije_id, sala_id, datum_vreme_projekcije, cena_karte) values(?, ?, ?, ?, ?)";
 			int i = 1;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(i++, projekcija.getFilm().getId());
 			preparedStatement.setInt(i++, projekcija.getTipProjekcije().getId());
 			preparedStatement.setInt(i++, projekcija.getSala().getId());
-			preparedStatement.setDate(i++, new java.sql.Date(projekcija.getDatumVremePrikazivanja().getTime()));
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-dd-MM HH:mm:ss");
+			preparedStatement.setString(i++, sdf.format(projekcija.getDatumVremePrikazivanja()));
 			preparedStatement.setDouble(i++, projekcija.getCenaKarte());
 			preparedStatement.executeUpdate();
 			

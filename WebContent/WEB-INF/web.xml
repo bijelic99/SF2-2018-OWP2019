@@ -248,4 +248,24 @@
     <servlet-name>KartaServlet</servlet-name>
     <url-pattern>/api/Karta</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SalaServlet</display-name>
+    <servlet-name>SalaServlet</servlet-name>
+    <servlet-class>controller.sala.SalaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SalaServlet</servlet-name>
+    <url-pattern>/api/Sala</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TipProjekcijeServlet</display-name>
+    <servlet-name>TipProjekcijeServlet</servlet-name>
+    <servlet-class>controller.projekcija.TipProjekcijeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TipProjekcijeServlet</servlet-name>
+    <url-pattern>/api/TipProjekcije</url-pattern>
+  </servlet-mapping>
 </web-app>
