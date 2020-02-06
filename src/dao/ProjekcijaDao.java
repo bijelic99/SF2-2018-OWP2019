@@ -39,7 +39,7 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 			preparedStatement.setInt(i++, projekcija.getFilm().getId());
 			preparedStatement.setInt(i++, projekcija.getTipProjekcije().getId());
 			preparedStatement.setInt(i++, projekcija.getSala().getId());
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-dd-MM HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 			preparedStatement.setString(i++, sdf.format(projekcija.getDatumVremePrikazivanja()));
 			preparedStatement.setDouble(i++, projekcija.getCenaKarte());
 			preparedStatement.executeUpdate();

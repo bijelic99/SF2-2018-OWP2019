@@ -68,7 +68,7 @@ public class SedisteDao implements DaoInterface {
 					" from projekcija" + 
 					" join  sala on sala.id = projekcija.sala_id" + 
 					" join sediste on sala.id = sediste.sala_id" + 
-					" left join karta on karta.projekcija_id = projekcija.id" + 
+					" left join karta on karta.sediste_id = sediste.id and karta.projekcija_id = projekcija.id" + 
 					" where projekcija.id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, projekcijaId);
