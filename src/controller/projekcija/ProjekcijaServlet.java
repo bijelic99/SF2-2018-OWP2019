@@ -153,6 +153,7 @@ public class ProjekcijaServlet extends HttpServlet {
 			String strProjekcijaId = request.getParameter("id");
 			if(strProjekcijaId != null) {
 			int projekcijaId = Integer.parseInt(strProjekcijaId);
+			//System.out.println(projekcijaId);
 			Projekcija projekcija = (Projekcija) DaoInterface.projekcijaDao.get(projekcijaId);
 			DaoInterface.projekcijaDao.delete(projekcija, DaoInterface.projekcijaDao.projekcijaHasKarte(projekcija.getId()));
 			} else throw new Exception("Id not provided");

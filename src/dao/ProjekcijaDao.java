@@ -96,25 +96,27 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 			connection.setAutoCommit(false);
 			connection.commit();
 			
-			query = "update projekcija set film_id = ?, tip_projekcije_id = ?, sala_id = ?, datum_vreme_projekcije = ?, cene_karte = ?, obrisan = ?";
+			query = "update projekcija set film_id = ?, tip_projekcije_id = ?, sala_id = ?, datum_vreme_projekcije = ?, cena_karte = ?, obrisan = ? where id = ?";
 			int i = 1;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(i++, projekcija.getFilm().getId());
 			preparedStatement.setInt(i++, projekcija.getTipProjekcije().getId());
 			preparedStatement.setInt(i++, projekcija.getSala().getId());
-			preparedStatement.setDate(i++, new java.sql.Date(projekcija.getDatumVremePrikazivanja().getTime()));
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+			preparedStatement.setString(i++, sdf.format(projekcija.getDatumVremePrikazivanja()));
 			preparedStatement.setDouble(i++, projekcija.getCenaKarte());
 			preparedStatement.setBoolean(i++, projekcija.getObrisan());
+			preparedStatement.setInt(i++, projekcija.getId());
 			preparedStatement.executeUpdate();
 			
 			if(!projekcija.getSala().getPodrzaniTipoviProjekcija().contains(projekcija.getTipProjekcije())) {
 				connection.rollback();
 				throw new Exception("Sala ne podrzava taj tip projekcije");
-			}
-			if(projekcija.getDatumVremePrikazivanja().before(new Date())) {
-				connection.rollback();
-				throw new Exception("Nije moguce rezervisati termin u proslosti");
-			}
+			} /*
+				 * if(projekcija.getDatumVremePrikazivanja().before(new Date())) {
+				 * connection.rollback(); throw new
+				 * Exception("Nije moguce rezervisati termin u proslosti"); }
+				 */
 			if(!DaoInterface.salaDao.checkIfSalaIsFree(projekcija.getSala().getId(), projekcija.getId(), 
 					projekcija.getDatumVremePrikazivanja(), 
 					new Date(projekcija.getDatumVremePrikazivanja().getTime() + projekcija.getFilm().getTrajanje()*1000), 
@@ -194,7 +196,12 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 				projekcija.setDatumVremePrikazivanja(new Date(resultSet.getLong(i++) * 1000));
 				projekcija.setCenaKarte(resultSet.getDouble(i++));
 			}
-		} finally {
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		finally {
 			try {
 				resultSet.close();
 			} catch (Exception e) {
@@ -245,7 +252,12 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 
 				projekcije.add(projekcija);
 			}
-		} finally {
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		finally {
 			try {
 				resultSet.close();
 			} catch (Exception e) {
@@ -277,7 +289,10 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 	}
 	
 	public boolean projekcijaHasKarte(int projekcijaId) throws Exception {
-		return DaoInterface.kartaDao.get(k->((Karta)k).getProjekcija().getId() == projekcijaId).isEmpty();
+		return !DaoInterface.kartaDao.get(k->{
+			
+			return ((Karta)k).getProjekcija().getId() == projekcijaId;
+					}).isEmpty();
 	}
 
 }

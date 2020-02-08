@@ -171,7 +171,8 @@ public class KartaDao implements DaoInterface {
 				int i = 1;
 				Karta karta = new Karta();
 				karta.setId(resultSet.getInt(i++));
-				karta.setProjekcija((Projekcija) DaoInterface.projekcijaDao.get(resultSet.getInt(i++)));
+				int projId = resultSet.getInt(i++);
+				karta.setProjekcija((Projekcija) DaoInterface.projekcijaDao.get(projId));
 				karta.setSediste((Sediste) DaoInterface.sedisteDao.get(resultSet.getInt(i++)));
 				karta.setKorisnik((Korisnik) DaoInterface.korisnikDao.get(resultSet.getInt(i++)));
 				karta.setDatumVremeProdaje(new Date(resultSet.getLong(i++) * 1000));

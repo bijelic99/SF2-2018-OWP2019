@@ -164,7 +164,7 @@ public class SalaDao implements DaoInterface {
 			//treba testirati
 			query = "select sala.id from projekcija join sala on projekcija.id = sala.id "
 					+ "join film on film.id = projekcija.film_id "
-					+ "where projekcija.id != ?, sala.id = ? and projekcija.datum_vreme_projekcije <= ? "
+					+ "where projekcija.id != ? and sala.id = ? and projekcija.datum_vreme_projekcije <= ? "
 					+ "and (DATETIME(projekcija.datum_vreme_projekcije, ('+' || film.trajanje || ' seconds'))) >= ?";
 			preparedStatement = connection.prepareStatement(query);
 			int i = 1;

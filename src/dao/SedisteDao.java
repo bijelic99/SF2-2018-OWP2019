@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.function.Predicate;
 
 import org.eclipse.jdt.internal.compiler.parser.TerminalTokens;
 
 import model.Identifiable;
+import model.Karta;
+import model.Korisnik;
+import model.Projekcija;
 import model.Sala;
 import model.Sediste;
 import model.ZauzetoSediste;
@@ -128,8 +132,44 @@ public class SedisteDao implements DaoInterface {
 
 	@Override
 	public Identifiable get(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Sediste sediste = null;
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+
+		try {
+			query = "select id, redni_broj, sala_id from sediste where id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				int i = 1;
+				sediste = new Sediste();
+				sediste.setId(resultSet.getInt(i++));
+				sediste.setRedniBroj(resultSet.getInt(i++));
+				sediste.setSala((Sala) DaoInterface.salaDao.get(resultSet.getInt(i++)));
+				
+
+			}
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+		}
+		return sediste;
 	}
 
 	@Override
