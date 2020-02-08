@@ -42,6 +42,7 @@ public class KartaServlet extends HttpServlet {
 		ObjectMapper om = new ObjectMapper();
 		try {
 			Map<String, String[]> paramMap = request.getParameterMap();
+			response.setStatus(HttpServletResponse.SC_OK);
 			if(paramMap.keySet().isEmpty()) {
 				ArrayList<Identifiable> karte = DaoInterface.kartaDao.getAll();
 				response.getWriter().write(om.writeValueAsString(karte));
@@ -71,9 +72,10 @@ public class KartaServlet extends HttpServlet {
 				response.getWriter().write(om.writeValueAsString(stream.collect(Collectors.toCollection(ArrayList::new))));
 				response.getWriter().close();
 			}
-			response.setStatus(HttpServletResponse.SC_OK);
+			
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("error", HttpServletResponse.SC_NOT_FOUND);
 			request.getRequestDispatcher("/Failure").forward(request, response);
 		}
@@ -113,6 +115,7 @@ public class KartaServlet extends HttpServlet {
 				int kartaId = Integer.parseInt(strKartaId);
 				Karta karta = (Karta) DaoInterface.kartaDao.get(kartaId);
 				DaoInterface.kartaDao.delete(karta);
+				request.getRequestDispatcher("/Success").forward(request, response);
 			} else throw new Exception("Id not provided");
 		} catch (Exception e) {
 			e.printStackTrace();

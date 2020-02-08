@@ -115,7 +115,7 @@ public class KartaDao implements DaoInterface {
 		String query = "";
 
 		try {
-			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje)) as datum_vreme_prodaje from karta where id = ?";
+			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje, 'localtime')) as datum_vreme_prodaje from karta where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -164,7 +164,7 @@ public class KartaDao implements DaoInterface {
 		String query = "";
 
 		try {
-			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje)) as datum_vreme_prodaje from karta where obrisan = false";
+			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje, 'localtime')) as datum_vreme_prodaje from karta where obrisan = false";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -179,7 +179,12 @@ public class KartaDao implements DaoInterface {
 
 				karte.add(karta);
 			}
-		} finally {
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		finally {
 			try {
 				resultSet.close();
 			} catch (Exception e) {
