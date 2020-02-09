@@ -56,7 +56,6 @@ public class LoginServlet extends HttpServlet {
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("loggedInUser", korisnik);
-				
 				HashMap<String, Object> resHm = new HashMap<String, Object>();
 				resHm.put("user", korisnik);
 				resHm.put("successful", true);

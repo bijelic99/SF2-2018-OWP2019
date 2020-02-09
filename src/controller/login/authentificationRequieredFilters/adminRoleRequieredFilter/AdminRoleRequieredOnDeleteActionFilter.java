@@ -34,9 +34,11 @@ public class AdminRoleRequieredOnDeleteActionFilter extends AdminRoleRequieredFi
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest sr = (HttpServletRequest) request;
 		if(sr.getMethod().equals("DELETE")) {
+			System.out.println("Delete Action filter hit");
 			super.doFilter(request, response, chain);
 		}
 		else chain.doFilter(request, response);
+		
 	}
 
 	/**

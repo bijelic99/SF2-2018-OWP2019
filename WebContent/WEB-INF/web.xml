@@ -21,13 +21,32 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <filter>
+    <display-name>LogOutWhenNeededFilter</display-name>
+    <filter-name>LogOutWhenNeededFilter</filter-name>
+    <filter-class>controller.login.LogOutWhenNeededFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LogOutWhenNeededFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>CreateSessionIfNotAvailableFilter</display-name>
+    <filter-name>CreateSessionIfNotAvailableFilter</filter-name>
+    <filter-class>controller.login.CreateSessionIfNotAvailableFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CreateSessionIfNotAvailableFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
     <display-name>AuthenticationRequieredOnGetAction</display-name>
     <filter-name>AuthenticationRequieredOnGetAction</filter-name>
     <filter-class>controller.login.authentificationRequieredFilters.AuthenticationRequieredOnGetAction</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>AuthenticationRequieredOnGetAction</filter-name>
-    <url-pattern>/AuthenticationRequieredOnGetAction</url-pattern>
+    <url-pattern>/api/Karta</url-pattern>
+    <url-pattern>/api/Korisnik</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>AutenthicationRequieredOnPostAction</display-name>
@@ -36,7 +55,10 @@
   </filter>
   <filter-mapping>
     <filter-name>AutenthicationRequieredOnPostAction</filter-name>
-    <url-pattern>/AutenthicationRequieredOnPostAction</url-pattern>
+    <url-pattern>/api/Korisnik</url-pattern>
+    <url-pattern>/api/Film</url-pattern>
+    <url-pattern>/api/Projekcija</url-pattern>
+    <url-pattern>/api/Karta</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>AuthenticationRequieredOnPutAction</display-name>
@@ -45,7 +67,10 @@
   </filter>
   <filter-mapping>
     <filter-name>AuthenticationRequieredOnPutAction</filter-name>
-    <url-pattern>/AuthenticationRequieredOnPutAction</url-pattern>
+    <url-pattern>/api/Korisnik</url-pattern>
+    <url-pattern>/api/Film</url-pattern>
+    <url-pattern>/api/Projekcija</url-pattern>
+    <url-pattern>/api/Karta</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>AuthenticationRequieredOnDeleteAction</display-name>
@@ -54,7 +79,10 @@
   </filter>
   <filter-mapping>
     <filter-name>AuthenticationRequieredOnDeleteAction</filter-name>
-    <url-pattern>/AuthenticationRequieredOnDeleteAction</url-pattern>
+    <url-pattern>/api/Korisnik</url-pattern>
+    <url-pattern>/api/Film</url-pattern>
+    <url-pattern>/api/Projekcija</url-pattern>
+    <url-pattern>/api/Karta</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>AdminRoleRequieredOnGetActionFilter</display-name>
@@ -72,7 +100,9 @@
   </filter>
   <filter-mapping>
     <filter-name>AdminRoleRequieredOnPostActionFilter</filter-name>
-    <url-pattern>/AdminRoleRequieredOnPostActionFilter</url-pattern>
+    <url-pattern>/api/Korisnik</url-pattern>
+    <url-pattern>/api/Film</url-pattern>
+    <url-pattern>/api/Projekcija</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>AdminRoleRequieredOnPutActionFilter</display-name>
@@ -81,7 +111,8 @@
   </filter>
   <filter-mapping>
     <filter-name>AdminRoleRequieredOnPutActionFilter</filter-name>
-    <url-pattern>/AdminRoleRequieredOnPutActionFilter</url-pattern>
+    <url-pattern>/api/Film</url-pattern>
+    <url-pattern>/api/Projekcija</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>AdminRoleRequieredOnDeleteActionFilter</display-name>
@@ -90,7 +121,10 @@
   </filter>
   <filter-mapping>
     <filter-name>AdminRoleRequieredOnDeleteActionFilter</filter-name>
-    <url-pattern>/AdminRoleRequieredOnDeleteActionFilter</url-pattern>
+    <url-pattern>/api/Projekcija</url-pattern>
+    <url-pattern>/api/Film</url-pattern>
+    <url-pattern>/api/Karta</url-pattern>
+    <url-pattern>/api/Korisnik</url-pattern>
   </filter-mapping>
   <listener>
     <listener-class>controller.InitListener</listener-class>

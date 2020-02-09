@@ -1,7 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.ConnectionManager;
 import dao.DaoInterface;
 import model.Film;
+import model.Korisnik;
 import model.Osoba;
 import model.Zanr;
 
@@ -24,66 +27,10 @@ public class InitListener implements ServletContextListener {
 	 * Default constructor.
 	 */
 	public InitListener() {
-		// TODO Auto-generated constructor stub
-		ConnectionManager.open();
-		System.out.println("Povezano");
-//		ObjectMapper om = new ObjectMapper();
-//		try {
-//			System.out.println(om.writeValueAsString(DaoInterface.korisnikDao.get(1)));
-//		} catch (JsonProcessingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		/*
-		 * //test Film f = new Film(); f.setNaziv("testFilm"); f.setReziser(new
-		 * Osoba(0,"Test")); ArrayList<Osoba> glumci = new ArrayList<Osoba>();
-		 * glumci.add(new Osoba(0,"Test")); glumci.add(new Osoba(0,"Dejan"));
-		 * glumci.add(new Osoba(0, "Letitia Dean")); f.setGlumci(glumci);
-		 * ArrayList<Zanr> zanrovi = new ArrayList<Zanr>(); zanrovi.add(new
-		 * Zanr(0,"Komedija")); zanrovi.add(new Zanr(0,"Horor")); zanrovi.add(new
-		 * Zanr(0,"Murder Mystery")); f.setZanrovi(zanrovi);
-		 * f.setGodinaProizvodnje(2019); f.setTrajanje(121*60);
-		 * 
-		 * try { DaoInterface.filmDao.add(f); } catch (Exception e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
-//		try {
-//			DaoInterface.filmDao.getAll().stream().forEach(f -> {
-//				System.out.println(f.toString());
-//				try {
-//					System.out.println(((Film)f).getReziser().getNaziv());
-//					
-//					if(((Film)f).getId() == 21) {
-//						Film film = (Film)f;
-//						ArrayList<Osoba> a = new ArrayList<Osoba>();
-//						a.add(new Osoba(5, "Mario"));
-//						a.add(new Osoba(5, "Luigi"));
-//						film.setGlumci(a);
-//						ArrayList<Zanr> b = new ArrayList<Zanr>();
-//						b.add(new Zanr(4,"horor"));
-//						b.add(new Zanr(4,"tragikomedija"));
-//						film.setZanrovi(b);
-//						DaoInterface.filmDao.update(film);
-//					}
-//					
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			});
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		try {
-//			System.out.println(DaoInterface.osobaDao.add(new Osoba(1, "test")));
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		
+		
+		
+		
 		
 	}
 
@@ -95,8 +42,11 @@ public class InitListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+		ConnectionManager.open();
+		System.out.println("Povezano");
+		ServletContext sc = arg0.getServletContext();
+		HashMap<Integer, Korisnik> hmk = new HashMap<Integer, Korisnik>();
+		sc.setAttribute("izmenjeniKorisnci", hmk);	
+		}
 
 }

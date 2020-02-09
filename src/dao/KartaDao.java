@@ -115,7 +115,7 @@ public class KartaDao implements DaoInterface {
 		String query = "";
 
 		try {
-			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje, 'localtime')) as datum_vreme_prodaje from karta where id = ?";
+			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje, '-1 hours')) as datum_vreme_prodaje from karta where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -164,9 +164,11 @@ public class KartaDao implements DaoInterface {
 		String query = "";
 
 		try {
-			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje, 'localtime')) as datum_vreme_prodaje from karta where obrisan = false";
+			
+			query = "select id, projekcija_id, sediste_id, korisnik_id, strftime('%s', datetime(datum_vreme_prodaje, '-1 hours')) as datum_vreme_prodaje from karta where obrisan = false";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
+			
 			while (resultSet.next()) {
 				int i = 1;
 				Karta karta = new Karta();
@@ -176,8 +178,11 @@ public class KartaDao implements DaoInterface {
 				karta.setSediste((Sediste) DaoInterface.sedisteDao.get(resultSet.getInt(i++)));
 				karta.setKorisnik((Korisnik) DaoInterface.korisnikDao.get(resultSet.getInt(i++)));
 				karta.setDatumVremeProdaje(new Date(resultSet.getLong(i++) * 1000));
-
+				
 				karte.add(karta);
+				
+				
+				
 			}
 		} 
 		catch (Exception e) {

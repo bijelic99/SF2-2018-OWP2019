@@ -102,6 +102,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			connection.commit();
 			return film.getId();
 		} catch (Exception e) {
+			e.printStackTrace();
 			connection.rollback();
 			throw e;
 		} finally {
@@ -223,6 +224,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			connection.commit();
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			connection.rollback();
 			throw e;
 		} finally {
@@ -290,6 +292,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			connection.commit();
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			connection.rollback();
 			throw e;
 		} finally {
@@ -420,7 +423,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 	}
 	
 	public Boolean filmHasProjections(int filmId) throws Exception {
-		return DaoInterface.projekcijaDao.get(p-> ((Projekcija)p).getFilm().getId() == filmId).isEmpty();
+		return !DaoInterface.projekcijaDao.get(p-> ((Projekcija)p).getFilm().getId() == filmId).isEmpty();
 	}
 
 }

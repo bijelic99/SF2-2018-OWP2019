@@ -41,10 +41,11 @@ public class KartaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ObjectMapper om = new ObjectMapper();
 		try {
+			response.setContentType("application/json; utf-8");
 			Map<String, String[]> paramMap = request.getParameterMap();
-			response.setStatus(HttpServletResponse.SC_OK);
 			if(paramMap.keySet().isEmpty()) {
 				ArrayList<Identifiable> karte = DaoInterface.kartaDao.getAll();
+				response.setStatus(HttpServletResponse.SC_OK);
 				response.getWriter().write(om.writeValueAsString(karte));
 				response.getWriter().close();
 			}

@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -105,6 +106,9 @@ public class KorisnikServlet extends HttpServlet {
 			String jsonKorisnik = DataParsingHelper.getJsonFromBufferReader(request.getReader());
 			Korisnik korisnik = om.readerFor(Korisnik.class).readValue(jsonKorisnik);
 			DaoInterface.korisnikDao.update(korisnik);
+			HashMap<Integer, Korisnik> hmk = (HashMap<Integer, Korisnik>) this.getServletContext().getAttribute("izmenjeniKorisnci");
+			hmk.put(korisnik.getId(), korisnik);
+			this.getServletContext().setAttribute("izmenjeniKorisnci", hmk);
 			request.getRequestDispatcher("/Success").forward(request, response);
 			
 		} catch (Exception e) {

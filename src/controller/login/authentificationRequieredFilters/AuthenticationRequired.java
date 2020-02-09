@@ -46,7 +46,6 @@ public class AuthenticationRequired implements Filter {
 		Korisnik korisnik = (Korisnik) session.getAttribute("loggedInUser");
 		if(korisnik != null) {
 			//Eventualno treba proveriti jel korisnik validan
-			System.out.println(korisnik.toString());
 			chain.doFilter(request, response);
 		
 		}

@@ -182,7 +182,7 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 		String query = "";
 
 		try {
-			query = "select id, film_id, tip_projekcije_id, sala_id, strftime('%s', datetime(datum_vreme_projekcije, 'localtime')) as datum_vreme_projekcije, cena_karte from projekcija where id = ?";
+			query = "select id, film_id, tip_projekcije_id, sala_id, strftime('%s', datetime(datum_vreme_projekcije, '-1 hours')) as datum_vreme_projekcije, cena_karte from projekcija where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -237,7 +237,7 @@ public class ProjekcijaDao implements DaoInterface, LogickoBrisanjeDaoInterface 
 		String query = "";
 
 		try {
-			query = "select id, film_id, tip_projekcije_id, sala_id, strftime('%s', datetime(datum_vreme_projekcije, 'localtime')) as datum_vreme_projekcije, cena_karte from projekcija where obrisan = false;";
+			query = "select id, film_id, tip_projekcije_id, sala_id, strftime('%s', datetime(datum_vreme_projekcije, '-1 hours')) as datum_vreme_projekcije, cena_karte from projekcija where obrisan = false;";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {

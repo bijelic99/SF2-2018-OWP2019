@@ -13,6 +13,7 @@ import javax.swing.text.Utilities;
 import model.Identifiable;
 import model.Korisnik;
 import model.Uloga;
+import model.Karta;
 
 public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
@@ -127,7 +128,7 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		ResultSet resultSet = null;
 		String query = "";
 		try {
-			query = "select id, username, password, strftime('%s', datetime(datum_registracije)) as datum_registracije, uloga_id, obrisan from korisnik where id = ?";
+			query = "select id, username, password, strftime('%s', datetime(datum_registracije, '-1 hours')) as datum_registracije, uloga_id, obrisan from korisnik where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -183,7 +184,7 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		ResultSet resultSet = null;
 		String query = "";
 		try {
-			query = "select id, username, password,  strftime('%s', datetime(datum_registracije)) as datum_registracije, uloga_id, obrisan from korisnik where obrisan = false;";
+			query = "select id, username, password,  strftime('%s', datetime(datum_registracije, '-1 hours')) as datum_registracije, uloga_id, obrisan from korisnik where obrisan = false;";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -235,9 +236,9 @@ public class KorisnikDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		return true;
 	}
 	
-	public boolean korisnikHasKarte(int korisnikId) {
+	public boolean korisnikHasKarte(int korisnikId) throws Exception {
 		//TODO kad se implementira KartaDao implementirati f-ju
-		return false;
+		return !DaoInterface.kartaDao.get(k-> ((Karta)k).getKorisnik().getId() == korisnikId).isEmpty();
 	}
 
 }

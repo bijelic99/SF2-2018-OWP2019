@@ -1,4 +1,4 @@
-package controller.login.authentificationRequieredFilters.adminRoleRequieredFilter;
+package controller.miscellaneous;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -7,22 +7,17 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import model.Korisnik;
-import model.Uloga;
 
 /**
- * Servlet Filter implementation class AdminRoleRequieredFilter
+ * Servlet Filter implementation class FrontendRedirect
  */
-public class AdminRoleRequieredFilter implements Filter {
+public class FrontendRedirect implements Filter {
 
     /**
      * Default constructor. 
      */
-    public AdminRoleRequieredFilter() {
+    public FrontendRedirect() {
         // TODO Auto-generated constructor stub
     }
 
@@ -37,18 +32,8 @@ public class AdminRoleRequieredFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		//Ova vrsta filtera bi trebalo uvek da ide posle AuthenticationRequiered Filtera
-		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpSession session = httpRequest.getSession();
-		Korisnik korisnik = (Korisnik) session.getAttribute("loggedInUser");
-		if(korisnik != null) {
-			if(korisnik.getUloga() == Uloga.Admin) chain.doFilter(request, response);
-			else httpRequest.getRequestDispatcher("/Unauthorized").forward(request, response);
-		}
-		else httpRequest.getRequestDispatcher("/Unauthorized").forward(request, response);
-		
-		
+		httpRequest.getRequestDispatcher("/index.html").forward(request, response);
 	}
 
 	/**

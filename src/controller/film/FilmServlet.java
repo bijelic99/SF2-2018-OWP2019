@@ -130,7 +130,7 @@ public class FilmServlet extends HttpServlet {
 			if(strFilmId != null) {
 			int filmId = Integer.parseInt(strFilmId);
 			Film film = (Film) DaoInterface.filmDao.get(filmId);
-			DaoInterface.filmDao.delete(film, !DaoInterface.filmDao.filmHasProjections(film.getId()));
+			DaoInterface.filmDao.delete(film, DaoInterface.filmDao.filmHasProjections(film.getId()));
 			} else throw new Exception("Id not provided");
 			
 			request.getRequestDispatcher("/Success").forward(request, response);

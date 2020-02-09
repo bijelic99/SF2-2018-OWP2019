@@ -55,5 +55,11 @@ public class Korisnik extends Identifiable {
 	public void setObrisan(Boolean obrisan) {
 		this.obrisan = obrisan;
 	}
+	@Override
+	public String toString() {
+		return "Korisnik [username=" + username + ", password=" + password + ", datumRegistracije=" + datumRegistracije
+				+ ", uloga=" + uloga + ", obrisan=" + obrisan + "]";
+	}
+	
 	
 }
