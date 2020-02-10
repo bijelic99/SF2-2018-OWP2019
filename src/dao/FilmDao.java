@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import javax.servlet.jsp.tagext.TryCatchFinally;
 
 import model.Film;
 import model.Identifiable;
@@ -92,7 +97,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 					e2.printStackTrace();
 				}
 			});
-			
+
 			query = "insert into film_slika values(?, ?)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
@@ -132,7 +137,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 
 			film.setGlumci(film.getGlumci().stream().map(o -> {
 				try {
-					o.setId(DaoInterface.osobaDao.add(o,connection));
+					o.setId(DaoInterface.osobaDao.add(o, connection));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -140,26 +145,25 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				return o;
 			}).collect(Collectors.toCollection(ArrayList::new)));
 
-			String glumci = film.getGlumci().stream().map(o -> o.getId()+"").reduce("", (ids, id)-> ids+id+", ");
+			String glumci = film.getGlumci().stream().map(o -> o.getId() + "").reduce("", (ids, id) -> ids + id + ", ");
 			glumci = glumci.trim();
-			glumci = glumci.substring(0, glumci.length()-1);
-			
-			//System.out.println(glumci);
-			query = "delete from film_glumac where film_id = ? and glumac_id not in ( "+glumci+" )";
+			glumci = glumci.substring(0, glumci.length() - 1);
+
+			// System.out.println(glumci);
+			query = "delete from film_glumac where film_id = ? and glumac_id not in ( " + glumci + " )";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-			
-			for(Osoba o : film.getGlumci()) {
-				query = "INSERT OR IGNORE INTO film_glumac " + 
-						"values(?,?)";
+
+			for (Osoba o : film.getGlumci()) {
+				query = "INSERT OR IGNORE INTO film_glumac " + "values(?,?)";
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, film.getId());
 				preparedStatement.setInt(2, o.getId());
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
-				}
+			}
 
 			film.setZanrovi(film.getZanrovi().stream().map(z -> {
 				try {
@@ -171,47 +175,45 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 				return z;
 			}).collect(Collectors.toCollection(ArrayList::new)));
 
-			String zanrovi = film.getZanrovi().stream().map(z -> z.getId()+"").reduce("", (ids, id) -> ids+id+", ");
+			String zanrovi = film.getZanrovi().stream().map(z -> z.getId() + "").reduce("",
+					(ids, id) -> ids + id + ", ");
 			zanrovi = zanrovi.trim();
-			zanrovi = zanrovi.substring(0, zanrovi.length()-1);
-			
-			//System.out.println(zanrovi);
-			query = "delete from film_zanr where film_id = ? and zanr_id not in ( "+zanrovi+" )";
+			zanrovi = zanrovi.substring(0, zanrovi.length() - 1);
+
+			// System.out.println(zanrovi);
+			query = "delete from film_zanr where film_id = ? and zanr_id not in ( " + zanrovi + " )";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-			
-			for(Zanr z : film.getZanrovi()) {
-				query = "INSERT OR IGNORE INTO film_zanr " + 
-						"values(?,?)";
+
+			for (Zanr z : film.getZanrovi()) {
+				query = "INSERT OR IGNORE INTO film_zanr " + "values(?,?)";
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, film.getId());
 				preparedStatement.setInt(2, z.getId());
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
-				}
-			
-			
-			if(film.getReziser().getId() != 0) film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));
-			
+			}
+
+			if (film.getReziser().getId() != 0)
+				film.getReziser().setId(DaoInterface.osobaDao.add(film.getReziser()));
+
 			query = "update film_slika set linkDoSlike = ? where film_id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, film.getPathDoSlike());
 			preparedStatement.setInt(2, film.getId());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-			
-			
-			query = "update film set naziv = ?,"
-					+ ( film.getReziser().getId() != 0 ? " reziser_id = ?," : ", ")
-					+ " trajanje = ?, distributer = ?,"
-					+ " zemlja_porekla = ?, godina_proizvodnje = ?,"
+
+			query = "update film set naziv = ?," + (film.getReziser().getId() != 0 ? " reziser_id = ?," : ", ")
+					+ " trajanje = ?, distributer = ?," + " zemlja_porekla = ?, godina_proizvodnje = ?,"
 					+ " opis = ?, obrisan = ? where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			int i = 1;
 			preparedStatement.setString(i++, film.getNaziv());
-			if(film.getReziser().getId() != 0) preparedStatement.setInt(i++, film.getReziser().getId());
+			if (film.getReziser().getId() != 0)
+				preparedStatement.setInt(i++, film.getReziser().getId());
 			preparedStatement.setInt(i++, film.getTrajanje());
 			preparedStatement.setString(i++, film.getDistributer());
 			preparedStatement.setString(i++, film.getZemljaPorekla());
@@ -220,7 +222,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			preparedStatement.setBoolean(i++, film.getObrisan());
 			preparedStatement.setInt(i++, film.getId());
 			preparedStatement.executeUpdate();
-			
+
 			connection.commit();
 			return true;
 		} catch (Exception e) {
@@ -240,17 +242,17 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			}
 
 		}
-		
+
 	}
 
 	@Override
 	public boolean delete(Identifiable object, boolean logickoBrisanje) throws Exception {
-		if(logickoBrisanje) {
-			Film f = (Film)object;
+		if (logickoBrisanje) {
+			Film f = (Film) object;
 			f.setObrisan(true);
 			return update(f);
-		}
-		else return delete(object);
+		} else
+			return delete(object);
 	}
 
 	@Override
@@ -263,32 +265,28 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			connection.setAutoCommit(false);
 			connection.commit();
 
-			
 			query = "delete from film_glumac where film_id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 
-			
 			query = "delete from film_zanr where film_id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-			
+
 			query = "delete from film_slika where film_id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
-			
+
 			query = "delete from film where id = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, film.getId());
 			preparedStatement.executeUpdate();
-			
-			
-			
+
 			connection.commit();
 			return true;
 		} catch (Exception e) {
@@ -308,7 +306,7 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 			}
 
 		}
-		
+
 	}
 
 	@Override
@@ -421,9 +419,61 @@ public class FilmDao implements DaoInterface, LogickoBrisanjeDaoInterface {
 		}
 		return filmovi;
 	}
-	
+
 	public Boolean filmHasProjections(int filmId) throws Exception {
-		return !DaoInterface.projekcijaDao.get(p-> ((Projekcija)p).getFilm().getId() == filmId).isEmpty();
+		return !DaoInterface.projekcijaDao.get(p -> ((Projekcija) p).getFilm().getId() == filmId).isEmpty();
+	}
+
+	public ArrayList<HashMap<String, Object>> getIzvestajForFilms(Date vremeOd, Date vremeDo) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		ArrayList<HashMap<String, Object>> listaSvihFilmova = new ArrayList<HashMap<String, Object>>();
+
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "";
+
+		try {
+			query = "select film.id, count(distinct projekcija.id) as broj_projekcije, count(karta.id) as broj_karata, sum(case when karta.id is not null then IfNULL(projekcija.cena_karte, 0) else 0 end) as ukupna_cena_karata"
+					+ " from film left join projekcija on projekcija.film_id = film.id"
+					+ " left join karta on projekcija.id = karta.projekcija_id"
+					+ " where film.obrisan = 0 and projekcija.datum_vreme_projekcije > ? and projekcija.datum_vreme_projekcije < ?"
+					+ " GROUP BY film.naziv ";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, sdf.format(vremeOd));
+			preparedStatement.setString(2, sdf.format(vremeDo));
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				HashMap<String, Object> filmSaIzvestajem = new HashMap<String, Object>();
+				Film film = (Film) DaoInterface.filmDao.get(resultSet.getInt(1));
+				filmSaIzvestajem.put("film", film);
+				filmSaIzvestajem.put("brojProjekcija", resultSet.getInt(2));
+				filmSaIzvestajem.put("brojProdatihKarata", resultSet.getInt(3));
+				filmSaIzvestajem.put("ukupnaCenaKarata", resultSet.getLong(4));
+				listaSvihFilmova.add(filmSaIzvestajem);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				preparedStatement.close();
+			} catch (Exception e) {
+
+			}
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+		}
+
+		return listaSvihFilmova;
 	}
 
 }

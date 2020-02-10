@@ -1,6 +1,7 @@
 package controller.login;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.Filter;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dao.DaoInterface;
+import model.Identifiable;
 import model.Korisnik;
 
 /**
@@ -47,21 +50,28 @@ public class CreateSessionIfNotAvailableFilter implements Filter {
 		Cookie[] cookies = httpRequest.getCookies();
 		HttpSession session = httpRequest.getSession();
 		Korisnik korisnik = (Korisnik) session.getAttribute("loggedInUser");
+		
 		if(korisnik != null ) {
 			
 			
 			chain.doFilter(request, response);
 			return;
 		}
-		else if(cookies != null) {
-			for(Cookie cookie : cookies) {
-				if(cookie.getName().equals("korisnik")) {
-					korisnik = om.readerFor(Korisnik.class).readValue(cookie.getValue());
-					session.setAttribute("loggedInUser", korisnik);
+		else if(httpRequest.getHeader("logging-out") == null && httpRequest.getHeader("logged-in") != null && httpRequest.getHeader("logged-in").equals("true") && httpRequest.getHeader("logged-in-user") != null) {
+			String[] creds = httpRequest.getHeader("logged-in-user").split("|");
+				try {
+					ArrayList<Identifiable> listaKor = DaoInterface.korisnikDao.get(k-> ((Korisnik)k).getUsername().equals(creds[0]) && ((Korisnik)k).getPassword().equals(creds[1]));
+					korisnik = !listaKor.isEmpty() ? (Korisnik) listaKor.get(0) : null;
+					if(korisnik != null) session.setAttribute("loggedInUser", korisnik);
+					System.out.println("zapoceo sesiju");
 					chain.doFilter(request, response);
 					return;
+					
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			}
+				
+			
 		}
 		chain.doFilter(request, response);
 	}

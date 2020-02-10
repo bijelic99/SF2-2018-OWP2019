@@ -127,6 +127,10 @@ public class KorisnikServlet extends HttpServlet {
 			int korisnikId = Integer.parseInt(strKorisnikId);
 			Korisnik korisnik = (Korisnik) DaoInterface.korisnikDao.get(korisnikId);
 			DaoInterface.korisnikDao.delete(korisnik, DaoInterface.korisnikDao.korisnikHasKarte(korisnikId));
+			HashMap<Integer, Korisnik> hmk = (HashMap<Integer, Korisnik>) this.getServletContext().getAttribute("izmenjeniKorisnci");
+			hmk.put(korisnik.getId(), korisnik);
+			this.getServletContext().setAttribute("izmenjeniKorisnci", hmk);
+			
 			} else throw new Exception("Id not provided");
 			
 			request.getRequestDispatcher("/Success").forward(request, response);

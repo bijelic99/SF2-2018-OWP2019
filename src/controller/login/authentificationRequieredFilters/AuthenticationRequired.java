@@ -45,20 +45,9 @@ public class AuthenticationRequired implements Filter {
 		HttpSession session = httpRequest.getSession();
 		Korisnik korisnik = (Korisnik) session.getAttribute("loggedInUser");
 		if(korisnik != null) {
-			//Eventualno treba proveriti jel korisnik validan
+			
 			chain.doFilter(request, response);
 		
-		}
-		else if(cookies != null) {
-			for(Cookie cookie : cookies) {
-				if(cookie.getName().equals("korisnik")) {
-					korisnik = om.readerFor(Korisnik.class).readValue(cookie.getValue());
-					session.setAttribute("loggedInUser", korisnik);
-					this.doFilter(request, response, chain);
-					return;
-				}
-			}
-			httpRequest.getRequestDispatcher("/Unauthorized").forward(request, response);
 		}
 		else httpRequest.getRequestDispatcher("/Unauthorized").forward(request, response);
 	}

@@ -47,6 +47,7 @@
     <filter-name>AuthenticationRequieredOnGetAction</filter-name>
     <url-pattern>/api/Karta</url-pattern>
     <url-pattern>/api/Korisnik</url-pattern>
+    <url-pattern>/api/Izvestavanje</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>AutenthicationRequieredOnPostAction</display-name>
@@ -91,7 +92,8 @@
   </filter>
   <filter-mapping>
     <filter-name>AdminRoleRequieredOnGetActionFilter</filter-name>
-    <url-pattern>/AdminRoleRequieredOnGetActionFilter</url-pattern>
+    <url-pattern>/api/Izvestavanje</url-pattern>
+    
   </filter-mapping>
   <filter>
     <display-name>AdminRoleRequieredOnPostActionFilter</display-name>
@@ -301,5 +303,15 @@
   <servlet-mapping>
     <servlet-name>TipProjekcijeServlet</servlet-name>
     <url-pattern>/api/TipProjekcije</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Izvestavanje</display-name>
+    <servlet-name>Izvestavanje</servlet-name>
+    <servlet-class>controller.film.Izvestavanje</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Izvestavanje</servlet-name>
+    <url-pattern>/api/Izvestavanje</url-pattern>
   </servlet-mapping>
 </web-app>
