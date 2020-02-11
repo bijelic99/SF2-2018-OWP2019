@@ -42,7 +42,7 @@ public class InitListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		ConnectionManager.open();
+		ConnectionManager.open(arg0.getServletContext().getRealPath("/"));
 		System.out.println("Povezano");
 		ServletContext sc = arg0.getServletContext();
 		HashMap<Integer, Korisnik> hmk = new HashMap<Integer, Korisnik>();
