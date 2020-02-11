@@ -14,7 +14,7 @@
     </init-param>
     <init-param>
       <param-name>cors.allowOrigin</param-name>
-      <param-value>http://localhost:8080, http://192.168.1.250:8080, http://localhost:8081, http://192.168.1.250:8081</param-value>
+      <param-value>http://localhost:8080, http://192.168.1.250:8080, http://localhost:8081, http://192.168.1.250:8081, https://cranky-brahmagupta-eddc50.netlify.com, http://cranky-brahmagupta-eddc50.netlify.com</param-value>
     </init-param>
   </filter>
   <filter-mapping>
@@ -318,8 +318,4 @@
     <servlet-name>Izvestavanje</servlet-name>
     <url-pattern>/api/Izvestavanje</url-pattern>
   </servlet-mapping>
-  <error-page>
-  <error-code>404</error-code>
-  <location>/index.html</location>
-  </error-page>
 </web-app>
